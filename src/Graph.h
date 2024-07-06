@@ -53,13 +53,13 @@ public:
     }
     
     float MotorwayCost(float distance){
-        return distance / 10 ;
+        return distance / 20 ;
     }
     float ARoadCost(float distance){
-        return distance / 5 ; 
+        return distance / 10 ; 
     }
     float BRoadCost(float distance){
-        return distance / 2 ; 
+        return distance / 5 ; 
     }
 
     float CalculateTimeCost(Vertex* start, Vertex* end){

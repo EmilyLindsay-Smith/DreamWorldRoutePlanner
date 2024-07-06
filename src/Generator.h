@@ -25,7 +25,7 @@ class Generator{
 private:
     bool VERBOSE;
     const int MAX_X = 100; // landscape max x value
-    const int MAX_Y = 100; // landscape max y value
+    const int MAX_Y = 101; // landscape max y value
     int numSettlements;
     int nextID=0;
     Graph* graph;
@@ -190,6 +190,7 @@ private:
             cout << "Generated B Roads in " << t->Duration() << " seconds" << endl;
             cout << "... generating extra roads ..." << endl;
         }
+        
         t->ReStart();
 
         vector<Vertex*>* allSettlements = cities;

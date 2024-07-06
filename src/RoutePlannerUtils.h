@@ -11,6 +11,8 @@
 
 using namespace std;
 
+#include <iostream>
+
 namespace RoutePlannerUtils{
 
     int GetRandomNumber(int upper) {
@@ -20,9 +22,15 @@ namespace RoutePlannerUtils{
         uniform_int_distribution<int> distribution(0, upper-1); // distribution from lower to upper bound that are passed in
 
         int randomNumber = distribution(eng);// generate random number
-
     return randomNumber;
 }
+
+    string MinToHour(float minutes){
+        int hours = static_cast<int>(round(minutes/60)); 
+        float mins = static_cast<int>(round(fmod(minutes,60)));
+        string time = to_string(hours) + " hours " + to_string(minutes) + "minutes";
+        return time;
+    }
 
     int CharToIndex(char c){
         return (c - 'a');

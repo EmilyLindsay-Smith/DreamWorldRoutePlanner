@@ -47,7 +47,6 @@ private:
         }
         // Retrieve pointer to settlement and display info
         Vertex* place = engine->RetrieveSettlementPointer(searchOutput);
-        cout << "m53" << endl;
         cout << "Selected Location: " << place->GetName() << "\t" << enum2Str(place->GetSettlement()) << " at (" << place->GetCoordinates()->x << "," << place->GetCoordinates()->y << ")" <<endl;
         return place;
     }
@@ -171,7 +170,7 @@ private:
             cout << "Unfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destination->GetName() << endl;
         }else{
             cout <<"\nIf you want to travel the shortest distance between " << origin->GetName() << " and " << destination->GetName()
-                << "y our journey will be " << pathCostByDist<< " kilometers" << endl;
+                << " your journey will be " << pathCostByDist<< " kilometers" << endl;
             cout << "Please follow this route: " << endl;
             DisplayRoute(pathByDist);
         }
