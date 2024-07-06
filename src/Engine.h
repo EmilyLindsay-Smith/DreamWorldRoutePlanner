@@ -129,13 +129,13 @@ public:
         return road;
     }
 // Find Paths
-    int FindPathCost(Vertex* origin, Vertex* destination, string TimeVsDist){
-        vector<int>* allPathCosts = pathFinder->GetPaths(origin, TimeVsDist);
-        int pathCost = (*allPathCosts)[destination->GetID()];
+    float FindPathCost(Vertex* origin, Vertex* destination, string TimeVsDist){
+        vector<float>* allPathCosts = pathFinder->GetPaths(origin, TimeVsDist);
+        float pathCost = (*allPathCosts)[destination->GetID()];
         return pathCost;
     }
 
-    stack<Vertex*> FindPath(Vertex* origin, Vertex* destination, string TimeVsDist, int pathCost){
+    stack<Vertex*> FindPath(Vertex* origin, Vertex* destination, string TimeVsDist, float pathCost){
         stack<Vertex*> path;
         if (pathCost == pathFinder->INF){ // if there is no path
             path.push(nullptr);

@@ -91,7 +91,7 @@ public:
         int aY = start->GetCoordinates()->y;
         int bX = end->GetCoordinates()->x;
         int bY = end->GetCoordinates()->y;
-        float euclideanDistance = sqrt(pow((aX - bX),2) + pow((aY - bY),2));
+        float euclideanDistance = (float) sqrt(pow((aX - bX),2) + pow((aY - bY),2));
         return euclideanDistance;
     };
 
@@ -141,14 +141,14 @@ public:
         return;
     }
 // Get Useful Info
-    int GetCost(int start, int end, string costType){
+    float GetCost(int start, int end, string costType){
         if (costType == "Time"){
             return (*adjList)[start][end]->TimeCost;
         }else{
             return (*adjList)[start][end]->DistCost;
         }
     }
-    int GetCost(Vertex* start, Vertex* end, string costType){
+    float GetCost(Vertex* start, Vertex* end, string costType){
         if (costType == "Time"){
             return (*adjList)[start->GetID()][end->GetID()]->TimeCost;
         }else{

@@ -161,10 +161,10 @@ private:
         }
 
         cout << "Calculating routes between " << origin->GetName() << " and " << destination->GetName() << "...." << endl;
-        int pathCostByTime = engine->FindPathCost(origin, destination, "Time");
+        float pathCostByTime = engine->FindPathCost(origin, destination, "Time");
         stack<Vertex*> pathByTime = engine->FindPath(origin, destination, "Time", pathCostByTime);
         
-        int pathCostByDist = engine->FindPathCost(origin, destination, "Dist");
+        float pathCostByDist = engine->FindPathCost(origin, destination, "Dist");
         stack<Vertex*> pathByDist = engine->FindPath(origin, destination, "Dist", pathCostByDist);
         if (pathByTime.top() == nullptr){
             cout << "Unfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destination->GetName() << endl;
@@ -210,11 +210,11 @@ private:
         string amenity = GetAmenity();
 
         Vertex* destByTime = engine->FindNearestAmenity(origin, amenity, "Time");
-        int pathCostByTime = engine->FindPathCost(origin, destByTime, "Time");
+        float pathCostByTime = engine->FindPathCost(origin, destByTime, "Time");
         stack<Vertex*> pathByTime = engine->FindPath(origin, destByTime, "Time", pathCostByTime);
 
         Vertex* destByDist = engine->FindNearestAmenity(origin, amenity, "Dist");
-        int pathCostByDist = engine->FindPathCost(origin, destByDist, "Dist");
+        float pathCostByDist = engine->FindPathCost(origin, destByDist, "Dist");
         stack<Vertex*> pathByDist = engine->FindPath(origin, destByDist, "Dist", pathCostByDist);
 
         cout << "The nearest " << amenity << " with the shortest distance route is in " << destByDist->GetName() << " (" << pathCostByDist << "km)" << endl;
@@ -296,7 +296,7 @@ private:
         cout << "As a compromise, the Wizard created some extra roads, adding roads to the 3rd, 6th and 9th closest settlements for each settlement." << endl;
         cout << "The people of DreamWorld still aren't very happy, but the Wizard won't listen to feedback or look at a map to figure out where more roads need to be built because he's run out of dragon repellant." << endl;
         cout << "The Wizard hopes to improve on this in the future when stocks of dragon repellant have grown" << endl;
-        SelectActivity();
+        Continue();
     }
 public:
     CLI(int size){

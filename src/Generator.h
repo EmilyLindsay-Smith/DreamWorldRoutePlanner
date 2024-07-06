@@ -39,10 +39,6 @@ private:
     vector<Vertex*>* townsAndVillages;
     vector<Vertex*>* villages;
 
-    int numMotorways = 0;
-    int numARoads = 0;
-    int numBRoads = 0;
-
     vector<pair<int,int>> ExistingCoords;
     
     pair<int, int> GetCoordinates(){
@@ -165,7 +161,6 @@ private:
         Prim* pMotorways = new Prim(cities);
         unordered_map<Vertex*, Vertex*> motorways = pMotorways->RunPrim();
         graph->AddEdges(motorways);
-        numMotorways = motorways.size();
         t->End();
         if (VERBOSE){
             cout << "Generated motorways in " << t->Duration() << " seconds" << endl;
@@ -179,7 +174,6 @@ private:
         aRoads1.insert(aRoads2.begin(), aRoads2.end());
         graph->AddEdges(aRoads1); // merged both sets incase there are duplicate roads
         t->End();
-        numARoads = aRoads1.size();
         if (VERBOSE){
             cout << "Generated A Roads in " << t->Duration() << " seconds" << endl;
             cout << "... generating B Roads ..." << endl;
@@ -191,7 +185,6 @@ private:
         unordered_map<Vertex*, Vertex*> bRoads2 = pBRoads2->RunPrim();
         bRoads1.insert(bRoads2.begin(), bRoads2.end());
         graph->AddEdges(bRoads1);
-        numBRoads = bRoads1.size();
         t->End();
         if (VERBOSE){
             cout << "Generated B Roads in " << t->Duration() << " seconds" << endl;
@@ -201,11 +194,9 @@ private:
 
         vector<Vertex*>* allSettlements = cities;
         allSettlements->insert(allSettlements->end(), townsAndVillages->begin(), townsAndVillages->end());
-
         Prim* extraRoads = new Prim(allSettlements);
         vector<EdgePair> newRoads = extraRoads->GetExtraEdges();
         graph->AddEdges(newRoads);
-        int numNewRoads = newRoads.size();
         t->End();
         if (VERBOSE){
             cout << "Generated Extra Roads in " << t->Duration() << " seconds" << endl;
@@ -242,22 +233,13 @@ public:
     }
 
     int GetNumCities(){
-        return cities->size();
+        return static_cast<int>(cities->size());
     }
     int GetNumTowns(){
-        return towns->size();
+        return static_cast<int>(towns->size());
     }
     int GetNumVillages(){
-        return villages->size();
-    }
-    int GetNumMotorways(){
-        return numMotorways;
-    }
-    int GetNumARoads(){
-        return numARoads;
-    }
-    int GetNumBRoads(){
-        return numBRoads;
+        return static_cast<int>(villages->size());
     }
 };
 #endif

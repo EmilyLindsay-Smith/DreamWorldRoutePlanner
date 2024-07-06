@@ -51,43 +51,43 @@ public:
     };
 
     int GetVowelLength(){
-        return this->vowel.size();
+        return static_cast<int>(this->vowel.size());
     }
     int GetOnsetLength(){
-        return this->onset.size();
+        return static_cast<int>(this->onset.size());
     }
     int GetCodaLength(){
-        return this->coda.size();
+        return static_cast<int>(this->coda.size());
     }
     int GetLongVowelLength(){
-        return this->longVowel.size();
+        return static_cast<int>(this->longVowel.size());
     }
     int GetComplexOnsetLength(){
-        return this->complexOnset.size();
+        return static_cast<int>(this->complexOnset.size());
     }
     int GetComplexCodaLength(){
-        return this->complexCoda.size();
+        return static_cast<int>(this->complexCoda.size());
     }
     int GetSyllableTypeLength(){
-        return this->syllableType.size();
+        return static_cast<int>(this->syllableType.size());
     }
     int GetSurnameSuffixLength(){
-        return this->surnameSuffix.size();
+        return static_cast<int>(this->surnameSuffix.size());
     }
     int GetFirstnameSuffixLength(){
-        return this->firstnameSuffix.size();
+        return static_cast<int>(this->firstnameSuffix.size());
     }
     int GetCountySuffixLength(){
-        return this->countySuffix.size();
+        return static_cast<int>(this->countySuffix.size());
     }  
     int GetVillageSuffixLength(){
-        return this->villageSuffix.size();
+        return static_cast<int>(this->villageSuffix.size());
     }
     int GetTownSuffixLength(){
-        return this->townSuffix.size();
+        return static_cast<int>(this->townSuffix.size());
     }
     int GetCitySuffixLength(){
-        return this->citySuffix.size();
+        return static_cast<int>(this->citySuffix.size());
     }
     string GetOnset(){
         return this->onset[GetRandomNumber(GetOnsetLength())];

@@ -21,7 +21,7 @@ class PrimGraph{
 friend Prim;
 private:
    vector<Vertex*>* vertices;
-   int numVertices;
+   size_t numVertices;
    unordered_map<Vertex*, unordered_map<Vertex*, float>>* adjList = new  unordered_map<Vertex*, unordered_map<Vertex*, float>>; 
 
     float CalculateWeight(Vertex* start, Vertex* end){
@@ -29,7 +29,7 @@ private:
         int aY = start->GetCoordinates()->y;
         int bX = end->GetCoordinates()->x;
         int bY = end->GetCoordinates()->y;
-        float euclideanDistance = sqrt(pow((aX - bX),2) + pow((aY - bY),2));
+        float euclideanDistance = (float) sqrt(pow((aX - bX),2) + pow((aY - bY),2));
         return euclideanDistance;
     }
 
@@ -72,7 +72,7 @@ struct EdgePair{
 
 class Prim{
 private:
-    int numVertices;
+    size_t numVertices;
     vector<Vertex*>* vertices;
     unordered_map<Vertex*, unordered_map<Vertex*, float>>* adjList;
     Vertex* currVertex = nullptr;
@@ -83,7 +83,7 @@ private:
         return (*adjList)[lhs][currVertex] < (*adjList)[rhs][currVertex]; 
     }
 */
-    int GetCost(Vertex* current, Vertex* vertex){
+    float GetCost(Vertex* current, Vertex* vertex){
         return (*adjList)[current][vertex];
     }
     vector<Vertex*> merge(Vertex* current, vector<Vertex*> leftVector, vector<Vertex*> rightVector){
@@ -91,8 +91,8 @@ private:
         int i = 0;
         int j = 0;
         while (i!= leftVector.size() && j != rightVector.size()){
-            int leftCost = GetCost(current, leftVector[i]);
-            int rightCost = GetCost(current, rightVector[i]);
+            float leftCost = GetCost(current, leftVector[i]);
+            float rightCost = GetCost(current, rightVector[j]);
             if(leftCost <= rightCost){ // change to vertexDistance cost
                 mergedVector.push_back(leftVector[i++]); // postfix increment gives i for now then increments for next use of i
             }else{
@@ -134,11 +134,11 @@ public:
 
     vector<EdgePair> GetExtraEdges(){
         vector<EdgePair> newEdges;
-        for (int i = 0; i< numVertices; i++){
+        for (int i = 0; i< static_cast<int>(numVertices); i++){
             Vertex* current = (*vertices)[i];
             unordered_map<Vertex*, float> vertexDistances = (*adjList)[current];
             vector<Vertex*> adjacentVertices = *vertices; // copy of vertices to sort by closest distance to current
-            adjacentVertices = mergeSort(current, adjacentVertices, 0, numVertices-1);
+            adjacentVertices = mergeSort(current, adjacentVertices, 0, static_cast<int>(numVertices)-1);
             for (int i = 0; i < 2; i++){
                 Vertex* chosenVertex = adjacentVertices[3*i];
                 newEdges.push_back(EdgePair(current, chosenVertex));

@@ -14,8 +14,8 @@ using namespace std;
 
 struct AmenityCost{
     Vertex* location;
-    int cost;
-    AmenityCost(Vertex* location, int cost){
+    float cost;
+    AmenityCost(Vertex* location, float cost){
         this->location = location;
         this->cost = cost;
     }
@@ -28,17 +28,17 @@ private:
     int numVertices = 0;
     vector<Vertex*>* vertices;
     
-    vector<int>* cost;
+    vector<float>* cost;
     vector<int>* parent;
     int latestSource = -1;
     string latestCostType = "";
     /*TODO: Route Cache for to avoid recalcuating already done routes*/
 public:
-    const int INF = 99999;
+    const float INF = 99999.0;
     Dijkstra(Graph* graph){
         this->graph = graph;
         this->vertices = graph->GetVertices();
-        this->cost = new vector<int>(numVertices, INF);
+        this->cost = new vector<float>(numVertices, INF);
     }
 /*
     bool Compare(int lhs, int rhs){ //custom comparator for priority queue to sort by lowest cost
@@ -96,7 +96,7 @@ public:
 
     stack<Vertex*> ReconstructPath(Vertex* origin, Vertex* goal, string CostType){
         if (origin->GetID() != latestSource || CostType != latestCostType){
-            vector<int>* pathCosts = GetPaths(origin, CostType);
+            vector<float>* pathCosts = GetPaths(origin, CostType);
         }
 
         stack<Vertex*> path;
@@ -116,7 +116,7 @@ public:
 
 
 
-    vector<int>* GetPaths(Vertex* source, string CostType){
+    vector<float>* GetPaths(Vertex* source, string CostType){
         if (numVertices == 0){ // need to update numVertices once graph has been filled
             this->numVertices = graph->GetNumberVertices();
         }
@@ -136,7 +136,7 @@ public:
             return (*cost)[lhs] < (*cost)[rhs]; 
         };
         priority_queue<int, vector<int>, decltype(Compare)> pq(Compare);
-        cost = new vector<int>(numVertices, INF); //reinitialise cost here 
+        cost = new vector<float>(numVertices, INF); //reinitialise cost here 
         vector<bool> visited(numVertices, false);
         int sourceIndex = source->GetID();
         cost->at(sourceIndex) = 0;
@@ -147,7 +147,7 @@ public:
             visited[currVertex] = true; // may need to make visited a map?? as vertices as not numbered here
             for (auto next: graph->GetAdjacentVerticesByID(currVertex)){
                 int adjVert = next; // depends on imp
-                int weight = graph->GetCost(currVertex, next, CostType); // depends on imp
+                float weight = graph->GetCost(currVertex, next, CostType); // depends on imp
                 if (visited[adjVert] == false && (*cost)[adjVert] > (*cost)[currVertex]){
                    (*cost)[adjVert] = (*cost)[currVertex] + weight;
                     pq.emplace(adjVert);
