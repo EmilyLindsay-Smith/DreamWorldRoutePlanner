@@ -1,3 +1,10 @@
+#Project Description
+
+#Project TO DOs
+- add amenities
+- add more tests
+- 1000w write up
+
 # Project Compilation Instructions:
 
 cmake -B build/

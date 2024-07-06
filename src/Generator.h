@@ -39,6 +39,8 @@ private:
     vector<Vertex*>* townsAndVillages;
     vector<Vertex*>* villages;
 
+    vector<string> specialAmenities = {"apothecary", "blacksmith", "glassworks", "tanner", "weaver", "carpenter", "tavern", "cobbler", "fishmonger"};
+    vector<string> standardAmenities = {"market", "university", "barracks", "healer", "bookshop", "oracle"};
     vector<pair<int,int>> ExistingCoords;
     
     pair<int, int> GetCoordinates(){
@@ -133,6 +135,14 @@ private:
         }
         //cout << "Appended to location vector" << endl;
         // ADD UTILITIES TOO
+       
+        switch(settlement){
+            case city: newPlace->AddAmenities(standardAmenities[0]); newPlace->AddAmenities(standardAmenities[1]); newPlace->AddAmenities(standardAmenities[2]); break;
+            case town: newPlace->AddAmenities(standardAmenities[3]); newPlace->AddAmenities(standardAmenities[4]); break;
+            case village: newPlace->AddAmenities(standardAmenities[5]); break;
+            default: throw runtime_error("Settlement Type not recognised");
+        }
+        newPlace->AddAmenities(specialAmenities[GetRandomNumber(static_cast<int>(specialAmenities.size()))]); // add random amenity
   //      cout << "UTILITIES NEED ADDING HERE" << endl;
     }
     void GenerateSettlements(){
@@ -241,6 +251,16 @@ public:
     }
     int GetNumVillages(){
         return static_cast<int>(villages->size());
+    }
+    vector<string> GetAmenities(){
+        vector<string> amenities;
+        for (string amenity: specialAmenities){
+            amenities.push_back(amenity);
+        }
+        for (string amenity: standardAmenities){
+            amenities.push_back(amenity);
+        }
+        return amenities;
     }
 };
 #endif

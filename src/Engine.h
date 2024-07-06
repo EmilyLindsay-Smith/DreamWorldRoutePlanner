@@ -85,8 +85,9 @@ public:
         return;
     };
 
-    void PrintAmenityTypes(){
-        return;
+    vector<string> GetAmenityTypes(){
+        vector<string> amenities = generator->GetAmenities();
+        return amenities;
     };
 
     string IdentifyRoadDirection(Vertex* origin, Vertex* dest){
@@ -146,8 +147,11 @@ public:
     };
 
     Vertex* FindNearestAmenity(Vertex* origin, string amenity, string TimeVsDist){
+        cout << "e150" << endl;
         int locationID = pathFinder->GetNearestAmenity(origin, TimeVsDist, amenity);
+        cout << "e152" << endl;
         Vertex* location = graph->GetVertexPointer(locationID);
+        cout << "e154" << endl;
         return location;
     };
 

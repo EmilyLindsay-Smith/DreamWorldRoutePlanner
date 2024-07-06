@@ -187,17 +187,17 @@ private:
     }
 
     string GetAmenity(){
-        vector<string> amenities = {"supermarket", "dragon school", "cheesemonger"};
+        vector<string> amenities = engine->GetAmenityTypes();
         cout << "The available amenities are: " << endl;
-        for (int i = 1; i <= static_cast<int>(amenities.size()); i++){
-            cout << "\t" << i << ":\t" << amenities[i] << endl;
+        for (int i = 0; i < static_cast<int>(amenities.size()); i++){
+            cout << "\t" << i+1 << ":\t" << amenities[i] << endl;
         }
         cout << "Please select an amenity by typing a number between 1 and " << static_cast<int>(amenities.size()) << endl;
         int choice;
         cin >> choice;
         string amenity;
         if (choice >= 1 && choice <= static_cast<int>(amenities.size())){
-            amenity = amenities[choice -1]; 
+            amenity = amenities[choice -1];
         }else{
             cout << "Sorry I didn't understand that. Please try again." << endl;
             amenity = GetAmenity();
@@ -208,7 +208,7 @@ private:
     void FindAmenity(){
         Vertex* origin = GetOrigin();
         string amenity = GetAmenity();
-
+        cout << "Chosen amenity: " << amenity << endl;
         Vertex* destByTime = engine->FindNearestAmenity(origin, amenity, "Time");
         float pathCostByTime = engine->FindPathCost(origin, destByTime, "Time");
         stack<Vertex*> pathByTime = engine->FindPath(origin, destByTime, "Time", pathCostByTime);
@@ -217,7 +217,7 @@ private:
         float pathCostByDist = engine->FindPathCost(origin, destByDist, "Dist");
         stack<Vertex*> pathByDist = engine->FindPath(origin, destByDist, "Dist", pathCostByDist);
 
-        cout << "The nearest " << amenity << " with the shortest distance route is in " << destByDist->GetName() << " (" << pathCostByDist << "km)" << endl;
+        cout << "The nearest " << amenity << "  with the shortest distance route is in " << destByDist->GetName() << " (" << pathCostByDist << "km)" << endl;
         cout << "The nearest " << amenity << "with the shortest time route is in " << destByTime->GetName() << " (" << pathCostByTime<< "minutes)" << endl;
 
         cout << "Do you want to see the routes? y/n" << endl;
@@ -228,17 +228,17 @@ private:
             if (pathByTime.top() == nullptr){
                 cout << "Unfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destByDist->GetName() << endl;
             }else{
-                cout <<"If you want to travel the shortest distance between " << origin->GetName() << " and " << destByDist->GetName()
+                cout <<"\nIf you want to travel the shortest distance between " << origin->GetName() << " and " << destByDist->GetName()
                     << "your journey will be " << pathCostByDist<< " kilometers" << endl;
-                cout << "Please follow this route: " << endl;
+                cout << "\nPlease follow this route: " << endl;
                 DisplayRoute(pathByDist);
             }
             if (pathByTime.top() == nullptr){
                 cout << "Unfortunately there is no shortest time route available between "<< origin->GetName() << " and " << destByTime->GetName() << endl;
             }else{
-                cout <<"If you want to travel the fastest route between " << origin->GetName() << " and " << destByTime->GetName()
+                cout <<"\nIf you want to travel the fastest route between " << origin->GetName() << " and " << destByTime->GetName()
                     << "your journey will take " << pathCostByTime<< " minutes" << endl;
-                cout << "Please follow this route: " << endl;
+                cout << "\nPlease follow this route: " << endl;
                 DisplayRoute(pathByTime);
             }
         }

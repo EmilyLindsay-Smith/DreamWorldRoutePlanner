@@ -48,7 +48,7 @@ public:
     int GetNearestAmenity(Vertex* source, string CostType, string amenity){
         cost = GetPaths(source, CostType);
         auto Compare = [this](int lhs, int rhs){ //custom comparator for priority queue to sort by lowest cost
-            return cost[lhs] < cost[rhs]; 
+            return (*cost)[lhs] < (*cost)[rhs]; 
         };
 
         priority_queue<int, vector<int>, decltype(Compare)> pq(Compare);
@@ -61,8 +61,9 @@ public:
             currVertex = pq.top();
             pq.pop();
             vector<string> amenities = (*vertices)[currVertex]->GetAmenities();
-            if ( std::find(amenities.begin(), amenities.end(), amenity) != amenities.end() )
+            if ( std::find(amenities.begin(), amenities.end(), amenity) != amenities.end() ){
                 foundAmenity = true;
+            }
         }
         if (foundAmenity){
             return currVertex; 
@@ -75,7 +76,7 @@ public:
         cost = GetPaths(source, CostType);
         vector<AmenityCost> amenityLocations;
         auto Compare = [this](int lhs, int rhs){ //custom comparator for priority queue to sort by lowest cost
-            return cost[lhs] < cost[rhs]; 
+            return (*cost)[lhs] < (*cost)[rhs]; 
         };
         priority_queue<int, vector<int>, decltype(Compare)> pq(Compare);
         for (int i = 0; i < numVertices; i++){
@@ -131,7 +132,6 @@ public:
         for (int i = 0; i < numVertices; i++){
             parent->push_back(i); // set parent as self;
         };
-
         auto Compare = [this](int lhs, int rhs){ //custom comparator for priority queue to sort by lowest cost
             return (*cost)[lhs] < (*cost)[rhs]; 
         };
