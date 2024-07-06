@@ -46,10 +46,14 @@ public:
 // Retrieve ID/Pointer to Settlement
     vector<RefPair>* ChooseBetweenSettlements(vector<RefPair>* placeVector, int choice){
         //return a single RefPair from a vector of multiple RefPairs
+        cout << "49" << endl;
         vector<RefPair>* results = new vector<RefPair>;
         results->push_back((*placeVector)[choice]);
+        cout << "52" << endl;
         string chosenPlace= (*results)[0].queryString;
+        cout << "54" << endl;
         chosenPlace[0] = toupper(chosenPlace[0]);
+        cout << "56" << endl;
         return results;
     };
     

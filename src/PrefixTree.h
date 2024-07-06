@@ -165,12 +165,12 @@ public:
         //Prints results from e.g. Search()
         if (results->empty()){
             cout << "No results found" << endl;
-        }else if(results->size() == 1){
+        }else if(static_cast<int>(results->size()) == 1){
             cout << "String found: " << (*results)[0].queryString << ":" << (*results)[0].stringRef << endl;
         }else{
 
-            cout << results->size() << " results found: " << endl;
-            for (int i = 0; i < results->size(); i++){
+            cout << static_cast<int>(results->size()) << " results found: " << endl;
+            for (int i = 0; i < static_cast<int>(results->size()); i++){
                 cout << "\t" <<  (*results)[i].queryString << ":" << (*results)[i].stringRef << endl;
             }
         }
@@ -182,10 +182,10 @@ public:
         if (results->empty()){
             cout << "No results found" << endl;
         }else{
-            if(results->size() != this->numStrings){
+            if(static_cast<int>(results->size()) != this->numStrings){
                 throw runtime_error("Problem finding all strings in tree - incorrect number of strings returned");
             }
-            cout << results->size() << "/" << this->numStrings << " results found: " << endl;
+            cout << static_cast<int>(results->size()) << "/" << this->numStrings << " results found: " << endl;
             for (auto it = results->begin(); it != results->end(); it++){
                 cout << "\t" << (*it) << endl;
             }

@@ -47,8 +47,8 @@ public:
     PrimGraph(vector<Vertex*>* vertices){
         this->vertices = vertices;
         this->numVertices = vertices->size();
-        for(int i = 0; i < numVertices; i++){
-            for (int j = 1; j< numVertices;j++){
+        for(int i = 0; i < static_cast<int>(numVertices); i++){
+            for (int j = 1; j< static_cast<int>(numVertices);j++){
                addEdge((*vertices)[i],(*vertices)[j]);
             }
         }
@@ -90,7 +90,7 @@ private:
         vector<Vertex*> mergedVector;
         int i = 0;
         int j = 0;
-        while (i!= leftVector.size() && j != rightVector.size()){
+        while (i!= static_cast<int>(leftVector.size()) && j != static_cast<int>(rightVector.size())){
             float leftCost = GetCost(current, leftVector[i]);
             float rightCost = GetCost(current, rightVector[j]);
             if(leftCost <= rightCost){ // change to vertexDistance cost
@@ -99,10 +99,10 @@ private:
                 mergedVector.push_back(rightVector[j++]);
             }
         }
-        while (i!=leftVector.size()){
+        while (i!=static_cast<int>(leftVector.size())){
             mergedVector.push_back(leftVector[i++]);
         }
-        while(j!=rightVector.size()){
+        while(j!=static_cast<int>(rightVector.size())){
             mergedVector.push_back(rightVector[j++]);
         }
         return mergedVector;        

@@ -12,16 +12,16 @@ private:
     int size;
 
     int ChoosePartialMatch(vector<RefPair>* searchOutput, string query){
-        cout << "Settlement " << query << " could not be found. However, " << searchOutput->size() << " partial matches have been identified." << endl;
+        cout << "Settlement " << query << " could not be found. However, " << static_cast<int>(searchOutput->size()) << " partial matches have been identified." << endl;
             
-            for (int i = 1; i <= searchOutput->size(); i++){
+            for (int i = 1; i <= static_cast<int>(searchOutput->size()); i++){
                 string place = (*searchOutput)[i-1].queryString;
                 place[0] = toupper(place[0]); // sentence case
-                Vertex* location = (*searchOutput)[-1].stringRef;
+                Vertex* location = (*searchOutput)[i-1].stringRef;
                 cout << "\t" <<  i << "\t" << place << endl;
             }
             
-            cout << "Please type an integer between 1 and " <<searchOutput->size() << " to choose a partial match settlement" << endl;
+            cout << "Please type an integer between 1 and " <<static_cast<int>(searchOutput->size()) << " to choose a partial match settlement" << endl;
             int choice;
             cin >> choice;
             if (choice < 1 && choice > searchOutput->size()){  // CHECK CHOICE IS INT??
@@ -40,13 +40,14 @@ private:
         if (searchOutput->empty()){
             cout << "Settlement " << query << " could not be found" << endl;
             return nullptr;
-        }else if (searchOutput->size() > 1){
+        }else if (static_cast<int>(searchOutput->size()) > 1){
             // If multiple partial matches found, user chooses one:
             int choice = ChoosePartialMatch(searchOutput, query);
             searchOutput = engine->ChooseBetweenSettlements(searchOutput, choice);
         }
         // Retrieve pointer to settlement and display info
         Vertex* place = engine->RetrieveSettlementPointer(searchOutput);
+        cout << "m53" << endl;
         cout << "Selected Location: " << place->GetName() << "\t" << enum2Str(place->GetSettlement()) << " at (" << place->GetCoordinates()->x << "," << place->GetCoordinates()->y << ")" <<endl;
         return place;
     }
@@ -57,10 +58,10 @@ private:
         if (results->empty()){
             cout << "No results found" << endl;
         }else{
-            if(results->size() != this->size){
+            if(static_cast<int>(results->size()) != this->size){
                 throw runtime_error("Problem finding all strings in tree - incorrect number of strings returned");
             }
-            cout << results->size() << " settlements found: " << endl;
+            cout << static_cast<int>(results->size()) << " settlements found: " << endl;
             for (auto it = results->begin(); it != results->end(); it++){
                 string place = (*it);
                 place[0] = toupper(place[0]); // sentence case
@@ -77,10 +78,10 @@ private:
         if (results->empty()){
             cout << "No results found" << endl;
         }else{
-            if(results->size() != this->size){
+            if(static_cast<int>(results->size()) != this->size){
                 throw runtime_error("Problem finding all strings in tree - incorrect number of strings returned");
             }
-            cout << results->size() << " settlements found: " << endl;
+            cout << static_cast<int>(results->size()) << " settlements found: " << endl;
             cout << "\t Settlement \t Type \t Coordinates "<< endl;
             for (auto it = results->begin(); it != results->end(); it++){
                 string place = (*it).queryString ;
@@ -110,7 +111,7 @@ private:
     void DisplayRoute(stack<Vertex*> route){
         if (route.empty()){
             cout << "There is no route available" << endl;
-        }else if (route.size() == 1){
+        }else if (static_cast<int>(route.size()) == 1){
             cout << "There is no route available" << endl;
         }
 
@@ -189,14 +190,14 @@ private:
     string GetAmenity(){
         vector<string> amenities = {"supermarket", "dragon school", "cheesemonger"};
         cout << "The available amenities are: " << endl;
-        for (int i = 1; i <= amenities.size(); i++){
+        for (int i = 1; i <= static_cast<int>(amenities.size()); i++){
             cout << "\t" << i << ":\t" << amenities[i] << endl;
         }
-        cout << "Please select an amenity by typing a number between 1 and " << amenities.size() << endl;
+        cout << "Please select an amenity by typing a number between 1 and " << static_cast<int>(amenities.size()) << endl;
         int choice;
         cin >> choice;
         string amenity;
-        if (choice >= 1 && choice <= amenities.size()){
+        if (choice >= 1 && choice <= static_cast<int>(amenities.size())){
             amenity = amenities[choice -1]; 
         }else{
             cout << "Sorry I didn't understand that. Please try again." << endl;
@@ -265,12 +266,12 @@ private:
         vector<AmenityCost> destByDist = engine->FindNearestAmenities(origin, amenity, count, "Dist");
 
         cout << "The nearest " << amenity << " with the shortest distance route are: "<<endl;
-        for (int i = 0; i < destByTime.size(); i++){
+        for (int i = 0; i < static_cast<int>(destByTime.size()); i++){
             cout << "\t" << destByDist[i].location->GetName() << " ("<<destByDist[i].cost <<"km)"<<endl;
         }
 
         cout << "The nearest " << amenity << " with the quickest route are: "<<endl;
-        for (int i = 0; i < destByTime.size(); i++){
+        for (int i = 0; i < static_cast<int>(destByTime.size()); i++){
             cout << "\t" << destByTime[i].location->GetName() << " ("<<destByTime[i].cost <<"minutes)"<<endl;
         }
 
@@ -314,6 +315,7 @@ public:
     }
     void SetUpLandscape(){
         cout << "... Creating DreamWorld ..." << endl;
+        engine = new Engine(size);
         engine->GenerateLandscape();
 
         cout << "DreamWorld created with " << this->size << " settlements and " << engine->GetNumRoads() << " roads" << endl;   
