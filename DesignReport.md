@@ -18,12 +18,11 @@ The route planner generates a road network between the settlements, such that:
 The user can interact with the route planner in the following ways:
 
 1) The user can display an alphabetised list of all locations in DreamWorld, and include their settlement type and coordinates
-3) The user can search for locations either using the entire string or a substring (prefix).
-4) The user can display all available information about a specific location
-5) The user can request a path between two locations, and see two routes : one optimised for time and the other for distance
-6) The user can request the route to the nearest amenity to a specific location
-7) The user can regenerate the settlements and road network in DreamWorld
-8) The user can see some information about how the road network was generated. 
+2) The user can search for locations either using the entire string or a substring (prefix).
+3) The user can display all available information about a specific location
+4) The user can request a path between two locations, and see two routes : one optimised for time and the other for distance
+5) The user can request the route to the nearest amenity to a specific location
+6) The user can regenerate the settlements and road network in DreamWorld
 
 ## Requirements
 GoogleTest is required to run the tests. All other included libraries are part of STL.
