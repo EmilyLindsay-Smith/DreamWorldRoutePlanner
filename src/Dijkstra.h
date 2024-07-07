@@ -60,8 +60,8 @@ public:
         while (!foundAmenity && !pq.empty()){
             currVertex = pq.top();
             pq.pop();
-            vector<string> amenities = (*vertices)[currVertex]->GetAmenities();
-            if ( std::find(amenities.begin(), amenities.end(), amenity) != amenities.end() ){
+            vector<string>* amenities = (*vertices)[currVertex]->GetAmenities();
+            if ( std::find(amenities->begin(), amenities->end(), amenity) != amenities->end() ){
                 foundAmenity = true;
             }
         }
@@ -71,29 +71,6 @@ public:
             return -1;
         }
     };
-
-    vector<AmenityCost> GetNearestXAmenities(Vertex* source, string CostType, string amenity, int desiredCount){
-        cost = GetPaths(source, CostType);
-        vector<AmenityCost> amenityLocations;
-        auto Compare = [this](int lhs, int rhs){ //custom comparator for priority queue to sort by lowest cost
-            return (*cost)[lhs] < (*cost)[rhs]; 
-        };
-        priority_queue<int, vector<int>, decltype(Compare)> pq(Compare);
-        for (int i = 0; i < numVertices; i++){
-            pq.emplace(i);
-        }
-        int count = 0; 
-        while (count != desiredCount && !pq.empty()){
-            int currVertex = pq.top();
-            pq.pop();
-            vector<string> amenities = (*vertices)[currVertex]->GetAmenities();
-            if ( std::find(amenities.begin(), amenities.end(), amenity) != amenities.end() )
-                count++;
-                amenityLocations.push_back(AmenityCost((*vertices)[currVertex], (*cost)[currVertex]));
-        }
-        return amenityLocations;
-    };
-
 
     stack<Vertex*> ReconstructPath(Vertex* origin, Vertex* goal, string CostType){
         if (origin->GetID() != latestSource || CostType != latestCostType){

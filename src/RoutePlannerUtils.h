@@ -27,7 +27,7 @@ namespace RoutePlannerUtils{
 
     string MinToHour(float minutes){
         int hours = static_cast<int>(round(minutes/60)); 
-        float mins = static_cast<int>(round(fmod(minutes,60)));
+        int mins = static_cast<int>(round(fmod(minutes,60)));
         string time = to_string(hours) + " hours " + to_string(minutes) + "minutes";
         return time;
     }

@@ -256,28 +256,7 @@ private:
             return GetCount();
         }
     }
-    void FindAmenities(){
-        Vertex* origin = GetOrigin();
-        string amenity = GetAmenity();
-        int count = GetCount();
-
-        vector<AmenityCost> destByTime = engine->FindNearestAmenities(origin, amenity, count, "Time");
-        vector<AmenityCost> destByDist = engine->FindNearestAmenities(origin, amenity, count, "Dist");
-
-        cout << "The nearest " << amenity << " with the shortest distance route are: "<<endl;
-        for (int i = 0; i < static_cast<int>(destByTime.size()); i++){
-            cout << "\t" << destByDist[i].location->GetName() << " ("<<destByDist[i].cost <<"km)"<<endl;
-        }
-
-        cout << "The nearest " << amenity << " with the quickest route are: "<<endl;
-        for (int i = 0; i < static_cast<int>(destByTime.size()); i++){
-            cout << "\t" << destByTime[i].location->GetName() << " ("<<destByTime[i].cost <<"minutes)"<<endl;
-        }
-
-        Continue();
-        return;
-    }
-
+   
     void Regenerate(){
         cout << "This will destroy the current DreamWorld and create a new one. Are you sure(y/n)?" << endl;
         char decision;
@@ -329,10 +308,9 @@ public:
         cout << "3: \t Display more information about a particular settlement in DreamWorld" << endl;
         cout << "4: \t Search for routes between settlements in DreamWorld" << endl;
         cout << "5: \t Search for the nearest amenity to a settlement in DreamWorld" << endl;
-        cout << "6: \t Search for multiple nearest amenities to a settlement in DreamWorld" << endl;
-        cout << "7: \t Regenerate DreamWorld to create new settlements and roads" << endl;
-        cout << "8: \t Learn the magical tale of how the Wizard created the DreamWorld road network" << endl;
-        cout << "Please type a number between 1 and 8 to select an activity or 'Ctrl-C' to exit the program" << endl;
+        cout << "6: \t Regenerate DreamWorld to create new settlements and roads" << endl;
+        cout << "7: \t Learn the magical tale of how the Wizard created the DreamWorld road network" << endl;
+        cout << "Please type a number between 1 and 7 to select an activity or 'Ctrl-C' to exit the program" << endl;
         int choice;
         cin >> choice;
 
@@ -342,9 +320,8 @@ public:
             case 3: DisplaySettlement(); break;
             case 4: PlanRoute(); break;
             case 5: FindAmenity(); break;
-            case 6: FindAmenities(); break;
-            case 7: Regenerate(); break;
-            case 8: LearnAboutRoadNetwork(); break;
+            case 6: Regenerate(); break;
+            case 7: LearnAboutRoadNetwork(); break;
             default: cout << "Sorry, I didn't catch that. Let's try again" << endl; SelectActivity(); break;
         }
     }

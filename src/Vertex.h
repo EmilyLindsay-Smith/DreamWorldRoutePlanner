@@ -24,13 +24,12 @@ struct Location{
 
 class Vertex{
 private:
-    int ID;
-    string name;
-    string friendName;
-    Location* coordinates; 
-    Vertex* parent;
+    int ID = -1;
+    string name = "";
+    string friendName = "";
+    Location* coordinates = nullptr; 
     SettlementType settlement;
-    vector<string> amenities;
+    vector<string>* amenities = nullptr;
 public:
     Vertex(){};
 
@@ -85,12 +84,12 @@ public:
         this->coordinates = new Location(x,y);
     }
 
-    vector<string> GetAmenities(){
+    vector<string>* GetAmenities(){
         return this->amenities;
     }
 
     void AddAmenities(string amenity){
-        amenities.push_back(amenity);
+        amenities->push_back(amenity);
     }
 //Overloaded Operators for Comparison
     bool operator!=(const Vertex& rhd) const {
@@ -113,10 +112,11 @@ public:
         cout << this->name << " is a " << enum2Str(settlement) 
             << " located at the coordinates ( " << coordinates->x << "," << coordinates->y <<")."
             << "Your friend " << this->friendName << " lives here."<< endl;
-        if (!amenities.empty()){
+        if (!amenities->empty()){
             cout << this->name << "'s amenities include: " << endl;
-            for (auto amenity: amenities){
-                cout << "\t " << amenity << endl;
+            vector<string>::iterator it = amenities->begin();
+            for (it; it < amenities->end(); it++){
+                cout << "\t " << *it << endl;
             }
         }
     }

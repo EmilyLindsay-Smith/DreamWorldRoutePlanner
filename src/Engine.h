@@ -155,10 +155,6 @@ public:
         return location;
     };
 
-    vector<AmenityCost> FindNearestAmenities(Vertex* origin, string amenity, int numberOfAmenities, string TimeVsDist){
-        vector<AmenityCost> amenitiesByID = pathFinder->GetNearestXAmenities(origin, TimeVsDist, amenity, numberOfAmenities);
-        return amenitiesByID;
-    };
 
 };
 
