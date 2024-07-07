@@ -1,4 +1,7 @@
 #include "gtest/gtest.h"
+#include "Vertex-test.h"
+#include "RoutePlannerUtils-test.h"
+#include "Graph-test.h"
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);

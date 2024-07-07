@@ -34,10 +34,20 @@ public:
     Vertex(){};
 
     Vertex(int ID, string name, string friendName, int x, int y, SettlementType settlement){
-        this->ID = ID;
-        this->name = name;
-        this->friendName = friendName;
-        this->coordinates = new Location(x,y);
+        if (ID >=0){
+            this->ID = ID;
+        }
+        
+        if (!ContainsNonAlpha(name)){
+            name = MakeSentenceCase(name);
+            this->name = name;
+        }
+        if (!ContainsNonAlpha(friendName)){
+            this->friendName = friendName;
+        }
+        if (x >=0 && y >= 0){
+            this->coordinates = new Location(x,y);
+        }
         this->settlement = settlement;
     }
 //Basic Getter/Setter

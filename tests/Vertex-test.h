@@ -125,5 +125,14 @@ TEST_F(VertexTest, TestAmenities){
     EXPECT_EQ((*v3->GetAmenities())[2], amenity4) << "Amenity not added in order";
 
     EXPECT_EQ(v4->GetAmenities()->size(), 0) << "Amenity vector not defaulting to empty vector";
+}
 
+TEST(VertexTest2, FullInstantiation){
+    Vertex* newVert = new Vertex(0, "nameOne", "friendOne", 10, 0, city);
+    EXPECT_EQ(newVert->GetID(), 0);
+    EXPECT_EQ(newVert->GetName(), "NameOne");
+    EXPECT_EQ(newVert->GetFriend(), "FriendOne");
+    EXPECT_EQ(newVert->GetCoordinates()->x, 10);
+    EXPECT_EQ(newVert->GetCoordinates()->y, 0);
+    EXPECT_EQ(newVert->GetSettlement(), city);  
 }

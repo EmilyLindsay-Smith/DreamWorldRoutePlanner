@@ -28,30 +28,7 @@ private:
     vector<Vertex*>* vertices;
     unordered_map<int, unordered_map<int, TravelCosts*>>* adjList; //decide on representation 
 
-public:
-    Graph(int size){
-        this->numberVertices = 0;
-        this->numberEdges = 0;
-        this->vertices = new vector<Vertex*>(size);
-        this->adjList = new unordered_map<int,unordered_map<int, TravelCosts* >>[size];
-        }
-
-// Basic Getters
-    int GetNumberVertices(){
-        return this->numberVertices;
-    }
-    vector<Vertex*>* GetVertices(){
-        return this->vertices;
-    }
-    
-    Vertex* GetVertexPointer(int ID){
-        return (*vertices)[ID];
-    }
-
-    int GetNumberRoads(){
-        return this->numberEdges;
-    }
-    
+    // Calculate Road Costs
     float MotorwayCost(float distance){
         return distance / 20 ;
     }
@@ -61,7 +38,7 @@ public:
     float BRoadCost(float distance){
         return distance / 5 ; 
     }
-
+// Calculate TimeCost
     float CalculateTimeCost(Vertex* start, Vertex* end){
         float distance = CalculateDistCost(start, end);
         SettlementType startSett = start->GetSettlement();
@@ -85,7 +62,7 @@ public:
         Vertex* endVert = (*vertices)[end];
         return CalculateTimeCost(startVert, endVert);
     };
-
+//Calculate Distance Cost
     float CalculateDistCost(Vertex* start, Vertex* end){
         int aX = start->GetCoordinates()->x;
         int aY = start->GetCoordinates()->y;
@@ -100,6 +77,31 @@ public:
         Vertex* endVert = (*vertices)[end];
         return CalculateDistCost(startVert, endVert);
     };
+
+
+public:
+    Graph(int size){
+        this->numberVertices = 0;
+        this->numberEdges = 0;
+        this->vertices = new vector<Vertex*>(size);
+        this->adjList = new unordered_map<int,unordered_map<int, TravelCosts* >>[size];
+        }
+
+// Basic Getters
+    int GetNumberVertices(){
+        return this->numberVertices;
+    }
+    vector<Vertex*>* GetVertices(){
+        return this->vertices;
+    }
+    
+    Vertex* GetVertexPointer(int ID){
+        return (*vertices)[ID];
+    }
+
+    int GetNumberRoads(){
+        return this->numberEdges;
+    }
 
     
 // Add vertices and Edges
