@@ -212,9 +212,10 @@ private:
         t->End();
         if (VERBOSE){
             cout << "Generated slowRoads in " << t->Duration() << " seconds" << endl;
-            cout << "... generating extra roads ..." << endl;
+        //    cout << "... generating extra roads ..." << endl;
         }
         
+        /* Extra Roads can be added here if desired
         t->ReStart();
 
         vector<Vertex*>* allSettlements = placeBigs;
@@ -226,7 +227,7 @@ private:
         if (VERBOSE){
             cout << "Generated Extra Roads in " << t->Duration() << " seconds" << endl;
         }
-        
+        */
         timer->End();
         if (VERBOSE){
             cout << "all roads generated: " << timer->Duration() << " seconds" <<endl;

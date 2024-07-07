@@ -279,16 +279,6 @@ private:
         SelectActivity();
     }
 
-    void LearnAboutRoadNetwork(){
-        cout << "Fearsome dragons patrol much of DreamWorld, so the Chief Wizard for DreamWorld Transport had to make quirky choices in designing the road network." << endl;
-        cout << "Using a magic spell called 'Prims Algorithm', the wizard made sure that all the citadels are connected by expressways; all the citadels and towns are connected by highways; and all the towns and hamlets are connected by lanes." << endl;
-        cout << "Therefore you can get everywhere in DreamWorld by road, and the Wizard didn't have to use too much dragon repellant as there was a small number of roads." << endl;
-        cout << "But the people of DreamWorld complained because the roads were congested and some journeys were hilariously inefficient compared to the as-the-crow-flies distance." << endl;
-        cout << "As a compromise, the Wizard created some extra roads, adding roads to the 3rd, 6th and 9th closest settlements for each settlement." << endl;
-        cout << "The people of DreamWorld still aren't very happy, but the Wizard won't listen to feedback or look at a map to figure out where more roads need to be built because he's run out of dragon repellant." << endl;
-        cout << "The Wizard hopes to improve on this in the future when stocks of dragon repellant have grown" << endl;
-        Continue();
-    }
 public:
     CLI(int size){
         this->size = size;
@@ -321,7 +311,6 @@ public:
         cout << "4: \t Search for routes between settlements in DreamWorld" << endl;
         cout << "5: \t Search for the nearest amenity to a settlement in DreamWorld" << endl;
         cout << "6: \t Regenerate DreamWorld to create new settlements and roads" << endl;
-        cout << "7: \t Learn the magical tale of how the Wizard created the DreamWorld road network" << endl;
         cout << "Please type a number between 1 and 7 to select an activity or 'Ctrl-C' to exit the program" << endl;
         int choice;
         cin >> choice;
@@ -333,7 +322,6 @@ public:
             case 4: PlanRoute(); break;
             case 5: FindAmenity(); break;
             case 6: Regenerate(); break;
-            case 7: LearnAboutRoadNetwork(); break;
             default: cout << "Sorry, I didn't catch that. Let's try again" << endl; SelectActivity(); break;
         }
     }

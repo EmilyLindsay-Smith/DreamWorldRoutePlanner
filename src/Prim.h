@@ -82,7 +82,7 @@ private:
     float GetCost(Vertex* current, Vertex* vertex){
         return (*adjList)[current][vertex];
     }
-    
+/* 
     vector<Vertex*> merge(Vertex* current, vector<Vertex*> leftVector, vector<Vertex*> rightVector){
         vector<Vertex*> mergedVector;
         int i = 0;
@@ -120,7 +120,7 @@ private:
         return merge(current, leftVector, rightVector);
         
     };
-
+*/
 public:
     Prim(vector<Vertex*>* vertices){
         this->vertices = vertices;
@@ -128,7 +128,7 @@ public:
         PrimGraph *tmp = new PrimGraph(vertices);
         this->adjList = tmp->GetAdjList();
     }
-
+/* Nearest edges can also be added using mergesort to sort the adjacency list
     vector<EdgePair> GetExtraEdges(){
         vector<EdgePair> newEdges;
         for (int i = 0; i< static_cast<int>(numVertices); i++){
@@ -143,7 +143,7 @@ public:
         }
         return newEdges;
     }
-
+*/
     unordered_map<Vertex*, Vertex*> RunPrim(){
         auto Compare = [this](Vertex* lhs, Vertex* rhs){ //custom comparator for priority queue to sort by lowest cost
             return (*adjList)[lhs][currVertex] < (*adjList)[rhs][currVertex]; 
