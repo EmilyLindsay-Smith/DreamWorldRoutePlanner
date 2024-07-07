@@ -11,8 +11,6 @@
 using namespace std;
 using namespace RoutePlannerUtils;
 
-//enum SettlementType{city, town, village};
-
 struct Location{
     int x;
     int y;

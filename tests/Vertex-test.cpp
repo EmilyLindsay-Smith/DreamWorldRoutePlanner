@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "Vertex.h"
 
-
 class VertexTest : public ::testing::Test
 {
 protected:

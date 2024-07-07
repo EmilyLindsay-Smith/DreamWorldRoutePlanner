@@ -1,11 +1,8 @@
 #ifndef ROUTEPLANNERUTILS_H
 #define ROUTEPLANNERUTILS_H
 
-
 #include <regex>
 #include <random>
-
-#include "Vertex.h"
 
 #include "Enums.h"
 
@@ -26,17 +23,27 @@ namespace RoutePlannerUtils{
 }
 
     string MinToHour(float minutes){
-        int hours = static_cast<int>(round(minutes/60)); 
+        if (minutes <= 0){
+            return "0 hours 0 minutes";
+        }
+        int hours = static_cast<int>(floor(minutes/60)); 
         int mins = static_cast<int>(round(fmod(minutes,60)));
-        string time = to_string(hours) + " hours " + to_string(minutes) + "minutes";
+        string time = to_string(hours) + " hour" + (hours==1? "" : "s") + " " + to_string(mins) + " minutes";
         return time;
     }
 
     int CharToIndex(char c){
-        return (c - 'a');
+        int result = c - 'a';
+        if (result < 0){
+            result += 32;
+        }
+        return result;
     }
 
     char IndexToChar(int i){
+        if (i > 25){
+            throw runtime_error("Index cannot map to char");
+        }
         return ('a' + i);
     }
 
