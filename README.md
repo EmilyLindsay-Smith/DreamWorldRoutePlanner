@@ -25,18 +25,23 @@ For details about some of the design decisions, please see DecisionReport.txt
 ## Project Compilation Instructions:
 To compile the project, clone this repository and from inside run the following commands:
 
+```
 cmake -B build/
 cmake -Dgtest_force_shared_crt=1 build/
 cmake --build build/
+```
 
 Note to compile the tests, you will need to add a /lib/ directory containing googletest. 
 The second line of the instructions is needed to force googletest to compile with the same CRT as the application
 
 ### Run the Project:
+```
 ./build/src/Debug/DreamWorldRoutePlanner_run.exe
+```
 ### Run the tests:
+```
 ./build/tests/DreamWorldRoutePlanner_test
-
+```
 # Future Improvements:
 - The PrefixTree could be converted to a radix tree to compress redundant nodes
 - The PrefixTree children representation could be changed to a map to avoid iterating over empty values in the current vector
