@@ -1,6 +1,8 @@
 # DreamWorld Route Planner Design Report
+
 Author: Dr. Emily Lindsay-Smith
 Date: July 2024
+
 --------------------------------------------------------------
 ## The Scenario
 
@@ -41,7 +43,7 @@ The DreamWorld Route Planner consists of classes. Each class has the following p
 | Dijkstra		| path finding using Dijkstra's Algorithm		|
 | PrefixTree		| links names to vertex points				|
 | Vertex		| settlements and their attributes			|
-|-----------------------|-------------------------------------------------------|
+
 
 The other .h files are as follows:
 | File			| Purpose						|
@@ -49,7 +51,7 @@ The other .h files are as follows:
 | Enums.h		| for enum SettlementType declaration			|
 | RoutePlannerUtils.h	| namespace with utility functions			|
 | Timer.h		| timer functions					|
-|-----------------------|-------------------------------------------------------|
+
 
 
 Some of the design decisions are discussed below:
