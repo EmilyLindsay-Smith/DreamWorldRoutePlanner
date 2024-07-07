@@ -1,9 +1,9 @@
 # DreamWorld Route Planner Design Report
 
 Author: Dr. Emily Lindsay-Smith
+
 Date: July 2024
 
---------------------------------------------------------------
 ## The Scenario
 
 Welcome to the DreamWorld Route Planner. 
