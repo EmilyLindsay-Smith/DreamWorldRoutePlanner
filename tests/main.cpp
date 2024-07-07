@@ -2,6 +2,7 @@
 #include "Vertex-test.h"
 #include "RoutePlannerUtils-test.h"
 #include "Graph-test.h"
+#include "Dijkstra-test.h"
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
