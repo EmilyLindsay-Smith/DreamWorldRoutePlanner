@@ -25,7 +25,6 @@ The user can interact with the route planner in the following ways:
 4) The user can request a path between two locations, and see two routes : one optimised for time and the other for distance
 5) The user can request the route to the nearest amenity to a specific location
 6) The user can regenerate the settlements and road network in DreamWorld
-7) The user can see some information about how the road network was generated. 
 
 For details about some of the design decisions, please see DecisionReport.txt
 
