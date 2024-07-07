@@ -59,6 +59,11 @@ namespace RoutePlannerUtils{
         }
         return str;
     }
+
+    string MakeSentenceCase(string str){
+        str[0] = toupper(str[0]);
+        return str;
+    }
 };
 
 #endif 
