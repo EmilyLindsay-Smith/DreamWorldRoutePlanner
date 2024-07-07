@@ -46,10 +46,6 @@ private: //45 vowels, 11 onsets, 49 codas, 5 syl types
     vector<string> citySuffix = {"", "burgh", "berg", "mouth", "bourne", "caster", "cester", "folk", "mere", "minster", "more", "ness", "pool", "port", "ster",
                                     "stead", "ham", "ton", "worth", "berry", "dale", "fold", "gate", "garth", "glen", "hithe", "holm", "hirst", "hurst", "ing", "inge", "law", "low", "ridge", "stow", "stowe", "wick", "way", "side"};
 
-public:
-    NameGenerator(){
-    };
-
     int GetVowelLength(){
         return static_cast<int>(this->vowel.size());
     }
@@ -133,6 +129,10 @@ public:
         };
         return output;
     }
+
+public:
+    NameGenerator(){};
+
     string GetName(string suffixType){
         string wordStructure = GetSyllable();
         string newName;
@@ -159,27 +159,3 @@ public:
 
 };
 #endif
-
-/*
-int main(){
-    NameGenerator* namer = new NameGenerator();
-    int SIZE = 15;
-    vector<string> suffixes = {"surname", "county", "village", "town", "city", "potato"};
-    for (int i = 0; i < SIZE; i++){
-        string suffixType = suffixes[GetRandomNumber(suffixes.size())];
-        cout << "Name for " << suffixType << " : " << namer->GetName(suffixType) << endl;
-    }
-// PAUSE FUNC
-    
-    bool boolean;
-    boolean = true;
-
-    if (boolean == true) {
-        cout << "Press any key to exit" << endl;
-        cin >> boolean; 
-    }
-
-
-    return 0;
-};
-*/

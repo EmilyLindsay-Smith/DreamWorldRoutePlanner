@@ -25,22 +25,24 @@ class Generator{
 private:
     bool VERBOSE;
     const int MAX_X = 100; // landscape max x value
-    const int MAX_Y = 101; // landscape max y value
-    int numSettlements;
-    int nextID=0;
+    const int MAX_Y = 100; // landscape max y value
+    
     Graph* graph;
     PrefixTree* searchTree;
     NameGenerator* namer;
     Timer* timer;
+    vector<string>* specialAmenities; 
+    vector<string>* standardAmenities;
+    
+    int numSettlements;
+    int nextID=0;
 
-    vector<Vertex*>* cities;
-    vector<Vertex*>* citiesAndTowns;
-    vector<Vertex*>* towns;
-    vector<Vertex*>* townsAndVillages;
-    vector<Vertex*>* villages;
+    vector<Vertex*>* placeBigs;
+    vector<Vertex*>* placeBigsAndPlaceMediums;
+    vector<Vertex*>* placeMediums;
+    vector<Vertex*>* placeMediumsAndPlaceSmalls;
+    vector<Vertex*>* placeSmalls;
 
-    vector<string> specialAmenities = {"apothecary", "blacksmith", "glassworks", "tanner", "weaver", "carpenter", "tavern", "cobbler", "fishmonger"};
-    vector<string> standardAmenities = {"market", "university", "barracks", "healer", "bookshop", "oracle"};
     vector<pair<int,int>> ExistingCoords;
     
     pair<int, int> GetCoordinates(){
@@ -82,12 +84,12 @@ private:
         //cout << "Set ID:" << ID << endl;
         // Choose Settlement Type
         SettlementType settlement;
-        if (ID < numSettlements * .2){ // 20% cities
-            settlement = city;
-        }else if (ID < numSettlements *.5){ // 30% towns
-            settlement = town;
-        }else{ // 50% villages
-            settlement = village;
+        if (ID < numSettlements * .2){ // 20% placeBigs
+            settlement = placeBig;
+        }else if (ID < numSettlements *.5){ // 30% placeMediums
+            settlement = placeMedium;
+        }else{ // 50% placeSmalls
+            settlement = placeSmall;
         }
         newPlace->SetSettlement(settlement);
         //cout << "Set Settlement: " << settlement << endl;
@@ -112,23 +114,23 @@ private:
         //cout << "Added to graph" << endl;
         // Append to location vectors for use in GenerateRoads();
         switch(settlement){
-            case city:
+            case placeBig:
           //      cout << "City identified" << endl;
-                cities->push_back(newPlace);
-            //    cout << "Added to cities" << endl;
-                citiesAndTowns->push_back(newPlace);
+                placeBigs->push_back(newPlace);
+            //    cout << "Added to placeBigs" << endl;
+                placeBigsAndPlaceMediums->push_back(newPlace);
               //  cout << "Added to c&T" << endl;
                 break;
-            case town:
+            case placeMedium:
                 //cout << "Town identified" << endl;
-                towns->push_back(newPlace);
-                citiesAndTowns->push_back(newPlace);
-                townsAndVillages->push_back(newPlace);
+                placeMediums->push_back(newPlace);
+                placeBigsAndPlaceMediums->push_back(newPlace);
+                placeMediumsAndPlaceSmalls->push_back(newPlace);
                 break;
-            case village:
+            case placeSmall:
                 //cout << "Village identified" << endl;
-                villages->push_back(newPlace);
-                townsAndVillages->push_back(newPlace);
+                placeSmalls->push_back(newPlace);
+                placeMediumsAndPlaceSmalls->push_back(newPlace);
                 break;
             default:
                 throw runtime_error("Settlement Type not recognised");
@@ -137,12 +139,24 @@ private:
         // ADD UTILITIES TOO
        
         switch(settlement){
-            case city: newPlace->AddAmenities(standardAmenities[0]); newPlace->AddAmenities(standardAmenities[1]); newPlace->AddAmenities(standardAmenities[2]); break;
-            case town: newPlace->AddAmenities(standardAmenities[3]); newPlace->AddAmenities(standardAmenities[4]); break;
-            case village: newPlace->AddAmenities(standardAmenities[5]); break;
+            case placeBig: 
+                for (int i=0; i<3; i++){
+                    newPlace->AddAmenities((*standardAmenities)[GetRandomNumber(static_cast<int>(standardAmenities->size()))]);
+                };
+                break;
+            case placeMedium:
+                for (int i=0; i<2; i++){
+                    newPlace->AddAmenities((*standardAmenities)[GetRandomNumber(static_cast<int>(standardAmenities->size()))]);
+                };
+                break;
+            case placeSmall: 
+                for (int i=0; i<1; i++){
+                    newPlace->AddAmenities((*standardAmenities)[GetRandomNumber(static_cast<int>(standardAmenities->size()))]);
+                };
+                break;
             default: throw runtime_error("Settlement Type not recognised");
         }
-        newPlace->AddAmenities(specialAmenities[GetRandomNumber(static_cast<int>(specialAmenities.size()))]); // add random amenity
+        newPlace->AddAmenities((*specialAmenities)[GetRandomNumber(static_cast<int>(specialAmenities->size()))]); // add random amenity
   //      cout << "UTILITIES NEED ADDING HERE" << endl;
     }
     void GenerateSettlements(){
@@ -161,50 +175,50 @@ private:
     };
 
     void GenerateRoads(){
-        //Generates MST 5 times: cities, citiesAndTowns, towns, townsAndVillages, villages
+        //Generates MST 5 times: placeBigs, placeBigsAndPlaceMediums, placeMediums, placeMediumsAndPlaceSmalls, placeSmalls
         if (VERBOSE){
             cout << "... generating road network ..." << endl;
-            cout << "... generating motorways ... " << endl;
+            cout << "... generating fastRoads ... " << endl;
         }
         timer->ReStart();
         Timer* t = new Timer("partial network");
-        Prim* pMotorways = new Prim(cities);
-        unordered_map<Vertex*, Vertex*> motorways = pMotorways->RunPrim();
-        graph->AddEdges(motorways);
+        Prim* pFastRoads = new Prim(placeBigs);
+        unordered_map<Vertex*, Vertex*> fastRoads = pFastRoads->RunPrim();
+        graph->AddEdges(fastRoads);
         t->End();
         if (VERBOSE){
-            cout << "Generated motorways in " << t->Duration() << " seconds" << endl;
-            cout << "... generating A Roads..." << endl;
+            cout << "Generated fastRoads in " << t->Duration() << " seconds" << endl;
+            cout << "... generating mediumRoads..." << endl;
         }
         t->ReStart();
-        Prim* pARoads1 = new Prim(towns);
-        unordered_map<Vertex*, Vertex*> aRoads1 = pARoads1->RunPrim();      
-        Prim* pARoads2 = new Prim(citiesAndTowns);
-        unordered_map<Vertex*, Vertex*> aRoads2 = pARoads2->RunPrim();
-        aRoads1.insert(aRoads2.begin(), aRoads2.end());
-        graph->AddEdges(aRoads1); // merged both sets incase there are duplicate roads
+        Prim* pMediumRoads1 = new Prim(placeMediums);
+        unordered_map<Vertex*, Vertex*> mediumRoads1 = pMediumRoads1->RunPrim();      
+        Prim* pMediumRoads2 = new Prim(placeBigsAndPlaceMediums);
+        unordered_map<Vertex*, Vertex*> mediumRoads2 = pMediumRoads2->RunPrim();
+        mediumRoads1.insert(mediumRoads2.begin(), mediumRoads2.end());
+        graph->AddEdges(mediumRoads1); // merged both sets incase there are duplicate roads
         t->End();
         if (VERBOSE){
-            cout << "Generated A Roads in " << t->Duration() << " seconds" << endl;
-            cout << "... generating B Roads ..." << endl;
+            cout << "Generated mediumRoads in " << t->Duration() << " seconds" << endl;
+            cout << "... generating slowRoads ..." << endl;
         }
         t->ReStart();
-        Prim* pBRoads1 = new Prim(villages);
-        unordered_map<Vertex*, Vertex*> bRoads1 = pBRoads1->RunPrim();
-        Prim* pBRoads2 = new Prim(townsAndVillages);
-        unordered_map<Vertex*, Vertex*> bRoads2 = pBRoads2->RunPrim();
-        bRoads1.insert(bRoads2.begin(), bRoads2.end());
-        graph->AddEdges(bRoads1);
+        Prim* pSlowRoads1 = new Prim(placeSmalls);
+        unordered_map<Vertex*, Vertex*> slowRoads1 = pSlowRoads1->RunPrim();
+        Prim* pSlowRoads2 = new Prim(placeMediumsAndPlaceSmalls);
+        unordered_map<Vertex*, Vertex*> slowRoads2 = pSlowRoads2->RunPrim();
+        slowRoads1.insert(slowRoads2.begin(), slowRoads2.end());
+        graph->AddEdges(slowRoads1);
         t->End();
         if (VERBOSE){
-            cout << "Generated B Roads in " << t->Duration() << " seconds" << endl;
+            cout << "Generated slowRoads in " << t->Duration() << " seconds" << endl;
             cout << "... generating extra roads ..." << endl;
         }
         
         t->ReStart();
 
-        vector<Vertex*>* allSettlements = cities;
-        allSettlements->insert(allSettlements->end(), townsAndVillages->begin(), townsAndVillages->end());
+        vector<Vertex*>* allSettlements = placeBigs;
+        allSettlements->insert(allSettlements->end(), placeMediumsAndPlaceSmalls->begin(), placeMediumsAndPlaceSmalls->end());
         Prim* extraRoads = new Prim(allSettlements);
         vector<EdgePair> newRoads = extraRoads->GetExtraEdges();
         graph->AddEdges(newRoads);
@@ -222,18 +236,20 @@ private:
 
 
 public:
-    Generator(int numSettlements, Graph* graph, PrefixTree* searchTree, bool verbose){
+    Generator(int numSettlements, Graph* graph, PrefixTree* searchTree, vector<string>* standardAmenities, vector<string>* specialAmenities, bool verbose){
         this->numSettlements = numSettlements;
         this->graph = graph;
         this->searchTree = searchTree;
+        this->standardAmenities = standardAmenities;
+        this->specialAmenities = specialAmenities;
         this->VERBOSE = verbose; 
         this->namer = new NameGenerator();
         this->timer = new Timer("Generator");
-        this->cities = new vector<Vertex*>;
-        this->citiesAndTowns = new vector<Vertex*>;
-        this->towns = new vector<Vertex*>;
-        this->townsAndVillages = new vector<Vertex*>;
-        this->villages = new vector<Vertex*>;
+        this->placeBigs = new vector<Vertex*>;
+        this->placeBigsAndPlaceMediums = new vector<Vertex*>;
+        this->placeMediums = new vector<Vertex*>;
+        this->placeMediumsAndPlaceSmalls = new vector<Vertex*>;
+        this->placeSmalls = new vector<Vertex*>;
 
     }
 
@@ -244,23 +260,13 @@ public:
     }
 
     int GetNumCities(){
-        return static_cast<int>(cities->size());
+        return static_cast<int>(placeBigs->size());
     }
-    int GetNumTowns(){
-        return static_cast<int>(towns->size());
+    int GetNumPlaceMediums(){
+        return static_cast<int>(placeMediums->size());
     }
-    int GetNumVillages(){
-        return static_cast<int>(villages->size());
-    }
-    vector<string> GetAmenities(){
-        vector<string> amenities;
-        for (string amenity: specialAmenities){
-            amenities.push_back(amenity);
-        }
-        for (string amenity: standardAmenities){
-            amenities.push_back(amenity);
-        }
-        return amenities;
+    int GetNumPlaceSmalls(){
+        return static_cast<int>(placeSmalls->size());
     }
 };
 #endif

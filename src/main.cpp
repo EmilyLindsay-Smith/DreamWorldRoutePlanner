@@ -10,12 +10,25 @@ class CLI{
 private:
     Engine* engine;
     int size;
+    vector<std::string>* standardAmenities; 
+    vector<std::string>* specialAmenities; 
+    vector<std::string>* amenities;
+;
+    void GenerateAmenities(){
+        vector<std::string> stA = {"apothecary", "blacksmith", "glassworks", "tanner", "weaver", "carpenter", "tavern", "cobbler", "fishmonger"};
+        vector<std::string> spA = {"market", "university", "barracks", "healer", "bookshop", "oracle"};
+        standardAmenities = &stA;
+        specialAmenities = &spA;
+        amenities = &stA;
+        amenities->insert(amenities->end(), spA.begin(), spA.end());
+        return;
+    }
 
-    int ChoosePartialMatch(vector<RefPair>* searchOutput, string query){
+    int ChoosePartialMatch(vector<RefPair>* searchOutput, std::string query){
         cout << "Settlement " << query << " could not be found. However, " << static_cast<int>(searchOutput->size()) << " partial matches have been identified." << endl;
             
             for (int i = 1; i <= static_cast<int>(searchOutput->size()); i++){
-                string place = (*searchOutput)[i-1].queryString;
+                std::string place = (*searchOutput)[i-1].queryString;
                 place[0] = toupper(place[0]); // sentence case
                 Vertex* location = (*searchOutput)[i-1].stringRef;
                 cout << "\t" <<  i << "\t" << place << endl;
@@ -33,7 +46,7 @@ private:
     }
 
     Vertex* FindSettlement(){
-        string query;
+        std::string query;
         cin >> query; // VALIDATE/SANITISE ME!!!!
         query[0] = toupper(query[0]); // sentence case
         vector<RefPair>* searchOutput = engine->RetrieveSettlement(query);
@@ -53,7 +66,7 @@ private:
 
     void ListAllSettlements(){
         // Get List of all Settlements
-        set<string>* results = engine->ListAllSettlements();
+        set<std::string>* results = engine->ListAllSettlements();
         if (results->empty()){
             cout << "No results found" << endl;
         }else{
@@ -62,7 +75,7 @@ private:
             }
             cout << static_cast<int>(results->size()) << " settlements found: " << endl;
             for (auto it = results->begin(); it != results->end(); it++){
-                string place = (*it);
+                std::string place = (*it);
                 place[0] = toupper(place[0]); // sentence case
                 cout << "\t" << place << endl;
             }
@@ -83,7 +96,7 @@ private:
             cout << static_cast<int>(results->size()) << " settlements found: " << endl;
             cout << "\t Settlement \t Type \t Coordinates "<< endl;
             for (auto it = results->begin(); it != results->end(); it++){
-                string place = (*it).queryString ;
+                std::string place = (*it).queryString ;
                 place[0] = toupper(place[0]);
                 cout << "\t" << place
                     << "\t" << enum2Str((*it).stringRef->GetSettlement())
@@ -121,10 +134,10 @@ private:
         while(!route.empty()){
             Vertex* place2 = route.top();
             route.pop();
-            string roadType = engine->IdentifyRoadType(place1, place2);
-            string compassDirection = engine->IdentifyRoadDirection(place1, place2);
-            string settlement = enum2Str(place2->GetSettlement());
-            string coordinates = "(" + to_string(place2->GetCoordinates()->x) + ","+ to_string(place2->GetCoordinates()->y) + ")";
+            std::string roadType = engine->IdentifyRoadType(place1, place2);
+            std::string compassDirection = engine->IdentifyRoadDirection(place1, place2);
+            std::string settlement = enum2Str(place2->GetSettlement());
+            std::string coordinates = "(" + to_string(place2->GetCoordinates()->x) + ","+ to_string(place2->GetCoordinates()->y) + ")";
             cout << count << ") Take the " << roadType << " going "<< compassDirection << ((compassDirection.length() > 0) ? " " : "")<< "to " << place2->GetName() << " (" << settlement << " at " << coordinates << ")" << endl;
             place1 = place2; 
             count++;
@@ -186,28 +199,27 @@ private:
         return;
     }
 
-    string GetAmenity(){
-        vector<string> amenities = engine->GetAmenityTypes();
+    std::string GetAmenity(){
         cout << "The available amenities are: " << endl;
-        for (int i = 0; i < static_cast<int>(amenities.size()); i++){
-            cout << "\t" << i+1 << ":\t" << amenities[i] << endl;
+        for (int i = 0; i < static_cast<int>(amenities->size()); i++){
+            cout << "\t" << i+1 << ":\t" << (*amenities)[i] << endl;
         }
-        cout << "Please select an amenity by typing a number between 1 and " << static_cast<int>(amenities.size()) << endl;
+        cout << "Please select an amenity by typing a number between 1 and " << static_cast<int>(amenities->size()) << endl;
         int choice;
         cin >> choice;
-        string amenity;
-        if (choice >= 1 && choice <= static_cast<int>(amenities.size())){
-            amenity = amenities[choice -1];
+        std::string amenity;
+        if (choice >= 1 && choice <= static_cast<int>(amenities->size())){
+            amenity = (*amenities)[choice -1];
         }else{
             cout << "Sorry I didn't understand that. Please try again." << endl;
             amenity = GetAmenity();
         }
         return amenity;
-
     }
+
     void FindAmenity(){
         Vertex* origin = GetOrigin();
-        string amenity = GetAmenity();
+        std::string amenity = GetAmenity();
         cout << "Chosen amenity: " << amenity << endl;
         Vertex* destByTime = engine->FindNearestAmenity(origin, amenity, "Time");
         float pathCostByTime = engine->FindPathCost(origin, destByTime, "Time");
@@ -280,7 +292,6 @@ private:
 public:
     CLI(int size){
         this->size = size;
-        engine = new Engine(size);
     }
 
     void Introduce(){
@@ -293,7 +304,8 @@ public:
     }
     void SetUpLandscape(){
         cout << "... Creating DreamWorld ..." << endl;
-        engine = new Engine(size);
+        GenerateAmenities();
+        engine = new Engine(size, standardAmenities, specialAmenities);
         engine->GenerateLandscape();
 
         cout << "DreamWorld created with " << this->size << " settlements and " << engine->GetNumRoads() << " roads" << endl;   

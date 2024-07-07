@@ -27,16 +27,16 @@ private:
     int numberEdges;
     int numberVertices;
     vector<Vertex*>* vertices;
-    unordered_map<int, unordered_map<int, TravelCosts*>>* adjList; //decide on representation 
+    unordered_map<int, unordered_map<int, TravelCosts*>>* adjList;
 
     // Calculate Road Costs
-    float MotorwayCost(float distance){
+    float FastRoadCost(float distance){
         return distance / 20 ;
     }
-    float ARoadCost(float distance){
+    float MediumRoadCost(float distance){
         return distance / 10 ; 
     }
-    float BRoadCost(float distance){
+    float SlowRoadCost(float distance){
         return distance / 5 ; 
     }
 // Calculate TimeCost
@@ -47,12 +47,12 @@ private:
         int roadType = startSett + endSett;
         float cost;
         switch(roadType){
-            // enums of SettlementType: city:0, town:1, village:2
-            case 0 : cost = MotorwayCost(distance); break; // two cities -> motorway
-            case 1 : cost = ARoadCost(distance); break; // one city one town -> A Road
-            case 2 : cost = ARoadCost(distance); break; // two towns -> A Road
-            case 3 : cost = BRoadCost(distance); break; // one town one village -> B Road
-            case 4 : cost = BRoadCost(distance); break; // two villages -> B Road
+            // enums of SettlementType: placeBig:0, placeMedium:1, placeSmall:2
+            case 0 : cost = FastRoadCost(distance); break; // two placeBig -> fastRoad
+            case 1 : cost = MediumRoadCost(distance); break; // one placeBig one placeMedium -> mediumRoad
+            case 2 : cost = MediumRoadCost(distance); break; // two placeMediums -> mediumRoad
+            case 3 : cost = SlowRoadCost(distance); break; // one placeMedium one placeSmall -> slowRoad
+            case 4 : cost = SlowRoadCost(distance); break; // two placeSmalls -> slowRoad
             default: throw runtime_error("Road combination not recognised to compute time cost");
         }
         return cost;
@@ -63,6 +63,7 @@ private:
         Vertex* endVert = (*vertices)[end];
         return CalculateTimeCost(startVert, endVert);
     };
+
 //Calculate Distance Cost
     float CalculateDistCost(Vertex* start, Vertex* end){
         int aX = start->GetCoordinates()->x;
@@ -116,8 +117,8 @@ public:
     }
     
     void AddEdge(int start, int end){
-        float TimeCost = CalculateTimeCost(start, end); // calc me
-        float DistCost = CalculateDistCost(start, end); // calc me
+        float TimeCost = CalculateTimeCost(start, end); 
+        float DistCost = CalculateDistCost(start, end); 
         (*adjList)[start][end] = new TravelCosts(TimeCost, DistCost);
         (*adjList)[end][start] = new TravelCosts(TimeCost, DistCost); //assuming undirected graph
         this->numberEdges++;
@@ -125,11 +126,11 @@ public:
     };
     
     void AddEdge(Vertex* start, Vertex* end){
-        float TimeCost = CalculateTimeCost(start, end); // calc me
-        float DistCost = CalculateDistCost(start, end); // calc me
+        float TimeCost = CalculateTimeCost(start, end); 
+        float DistCost = CalculateDistCost(start, end); 
         (*adjList)[start->GetID()][end->GetID()] = new TravelCosts(TimeCost, DistCost);
         (*adjList)[end->GetID()][start->GetID()] = new TravelCosts(TimeCost, DistCost);
-        this->numberEdges++;
+        this->numberEdges++; //only incrementing by 1 as assuming undirected graph -> 2 edges needed in adjList but underlyingly 1 road added
         return;
     };
 

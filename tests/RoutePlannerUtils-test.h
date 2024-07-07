@@ -49,9 +49,9 @@ TEST(RoutePlannerUtilsTest, IndexToChar){
 }
 
 TEST(RoutePlannerUtilsTest, enum2Str){
-    SettlementType sett1 = city;
-    SettlementType sett2 = town;
-    SettlementType sett3 = village;
+    SettlementType sett1 = placeBig;
+    SettlementType sett2 = placeMedium;
+    SettlementType sett3 = placeSmall;
     
     EXPECT_EQ(enum2Str(sett1), "citadel");
     EXPECT_EQ(enum2Str(sett2), "town");

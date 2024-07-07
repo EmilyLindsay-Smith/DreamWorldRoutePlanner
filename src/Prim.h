@@ -78,14 +78,11 @@ private:
     Vertex* currVertex = nullptr;
 
     static const int INF=99999;
-/*
-    auto Compare = [](Vertex* lhs, Vertex* rhs){ //custom comparator for priority queue to sort by lowest cost
-        return (*adjList)[lhs][currVertex] < (*adjList)[rhs][currVertex]; 
-    }
-*/
+
     float GetCost(Vertex* current, Vertex* vertex){
         return (*adjList)[current][vertex];
     }
+    
     vector<Vertex*> merge(Vertex* current, vector<Vertex*> leftVector, vector<Vertex*> rightVector){
         vector<Vertex*> mergedVector;
         int i = 0;

@@ -2,9 +2,9 @@
 #define ENUMS_H
 
 enum SettlementType{
-    city,
-    town,
-    village
+    placeBig,
+    placeMedium,
+    placeSmall
 };
 
 #endif

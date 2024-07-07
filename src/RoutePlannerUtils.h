@@ -49,9 +49,9 @@ namespace RoutePlannerUtils{
 
     string enum2Str(SettlementType sett){
         switch(sett){
-            case city : return "citadel"; //"city";
-            case town : return "town";
-            case village : return "hamlet"; //"village";
+            case placeBig : return "citadel"; //"city";
+            case placeMedium : return "town";
+            case placeSmall : return "hamlet"; //"village";
             default: return "settlement";
         }
     }

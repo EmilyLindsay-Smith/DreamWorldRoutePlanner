@@ -23,11 +23,11 @@ private:
     Dijkstra* pathFinder; 
 
 public:
-    Engine(int size){
+    Engine(int size, vector<string>* standardAmenities, vector<string>* specialAmenities){
         this->numSettlements = size;
         this->searchTree = new PrefixTree();
         this->graph = new Graph(numSettlements);
-        this->generator = new Generator(numSettlements, graph, searchTree, true);
+        this->generator = new Generator(numSettlements, graph, searchTree, standardAmenities, specialAmenities, true);
         this->pathFinder = new Dijkstra(graph);
     }
 
@@ -43,13 +43,14 @@ public:
     int CheckPrefixTree(){
         return searchTree->numStrings;
     }
+
 // Retrieve ID/Pointer to Settlement
     vector<RefPair>* ChooseBetweenSettlements(vector<RefPair>* placeVector, int choice){
         //return a single RefPair from a vector of multiple RefPairs
         vector<RefPair>* results = new vector<RefPair>;
         results->push_back((*placeVector)[choice]);
         string chosenPlace= (*results)[0].queryString;
-        chosenPlace[0] = toupper(chosenPlace[0]);
+        chosenPlace = MakeSentenceCase(chosenPlace);
         return results;
     };
     
@@ -85,11 +86,6 @@ public:
         return;
     };
 
-    vector<string> GetAmenityTypes(){
-        vector<string> amenities = generator->GetAmenities();
-        return amenities;
-    };
-
     string IdentifyRoadDirection(Vertex* origin, Vertex* dest){
         // Identify the compass direction of the road
         int origin_x = origin->GetCoordinates()->x;
@@ -119,12 +115,12 @@ public:
         int roadType = startSett + endSett;
         string road;
         switch(roadType){
-            // enums of SettlementType: city:0, town:1, village:2
-            case 0 : road = "expressway"; break; // two cities -> motorway
-            case 1 : road = "highway"; break; // one city one town -> A Road
-            case 2 : road = "highway"; break; // two towns -> A Road
-            case 3 : road = "lane"; break; // one town one village -> B Road
-            case 4 : road = "lane"; break; // two villages -> B Road
+            // enums of SettlementType: placeBig:0, placeMedium:1, placeSmall:2
+            case 0 : road = "expressway"; break; // two placeBigs -> motorway
+            case 1 : road = "highway"; break; // one placeBig one placeMedium -> A Road
+            case 2 : road = "highway"; break; // two placeMediums -> A Road
+            case 3 : road = "lane"; break; // one placeMedium one placeSmall -> B Road
+            case 4 : road = "lane"; break; // two placeSmalls -> B Road
             default: road = "unknown"; break;
         }
         return road;

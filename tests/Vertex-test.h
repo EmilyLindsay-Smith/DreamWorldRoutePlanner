@@ -46,7 +46,7 @@ TEST_F(VertexTest, TestID){
 };
 
 TEST_F(VertexTest, TestSettlement){
-    SettlementType sett1 = city;
+    SettlementType sett1 = placeBig;
 
     v1->SetSettlement(sett1);
     
@@ -128,11 +128,11 @@ TEST_F(VertexTest, TestAmenities){
 }
 
 TEST(VertexTest2, FullInstantiation){
-    Vertex* newVert = new Vertex(0, "nameOne", "friendOne", 10, 0, city);
+    Vertex* newVert = new Vertex(0, "nameOne", "friendOne", 10, 0, placeBig);
     EXPECT_EQ(newVert->GetID(), 0);
     EXPECT_EQ(newVert->GetName(), "NameOne");
     EXPECT_EQ(newVert->GetFriend(), "friendOne");
     EXPECT_EQ(newVert->GetCoordinates()->x, 10);
     EXPECT_EQ(newVert->GetCoordinates()->y, 0);
-    EXPECT_EQ(newVert->GetSettlement(), city);  
+    EXPECT_EQ(newVert->GetSettlement(), placeBig);  
 }

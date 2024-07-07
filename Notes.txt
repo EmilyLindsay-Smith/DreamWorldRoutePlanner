@@ -62,7 +62,15 @@ Could create a naive suffix tree based on this if add word word-length times, an
 	- may need to return sets to avoid duplications
 
 
+// OPTIMISATION:
+/*
+    Current alphabet vector of children is inefficient - replace with e.g. map to avoid iterating over empty values?
+        need to update in Node class and in every alphabet length for loop
+*/
 
+//Time Complexity to Create: O(W*L): W = num words, L = average word length
+//Time Complexity to Search: O(W*L): - perform L steps for W words?
+// Hash insertion/lookup similar complexity but can't look up words by prefix
 
 
 

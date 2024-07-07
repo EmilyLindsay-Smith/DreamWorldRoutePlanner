@@ -40,11 +40,7 @@ public:
         this->vertices = graph->GetVertices();
         this->cost = new vector<float>(numVertices, INF);
     }
-/*
-    bool Compare(int lhs, int rhs){ //custom comparator for priority queue to sort by lowest cost
-        return cost[lhs] < cost[rhs]; 
-    }
-*/
+
     int GetNearestAmenity(Vertex* source, string CostType, string amenity){
         cost = GetPaths(source, CostType);
         auto Compare = [this](int lhs, int rhs){ //custom comparator for priority queue to sort by lowest cost
@@ -121,18 +117,16 @@ public:
         while (!pq.empty()){  //depends on priorityqueue imp
             int currVertex = pq.top();
             pq.pop();
-            visited[currVertex] = true; // may need to make visited a map?? as vertices as not numbered here
+            visited[currVertex] = true; 
             for (auto next: graph->GetAdjacentVerticesByID(currVertex)){
-                int adjVert = next; // depends on imp
-                float weight = graph->GetCost(currVertex, next, CostType); // depends on imp
+                int adjVert = next; 
+                float weight = graph->GetCost(currVertex, next, CostType);
                 if (visited[adjVert] == false && (*cost)[adjVert] > (*cost)[currVertex]){
                    (*cost)[adjVert] = (*cost)[currVertex] + weight;
                     pq.emplace(adjVert);
                     (*parent)[adjVert] = currVertex;
-                    //(*vertices)[adjVert]->SetParent((*vertices)[currVertex]);
                 }
                 if (visited[adjVert] && (*cost)[adjVert] == 0){
-                    //(*vertices)[adjVert]->SetParent((*vertices)[currVertex]);
                     (*parent)[adjVert] = currVertex;
                 }
             }
