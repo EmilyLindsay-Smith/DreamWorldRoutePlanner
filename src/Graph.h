@@ -23,6 +23,7 @@ struct TravelCosts{
 class Graph{
 private:
     static const int INF=99999;
+    int MAX_SIZE;
     int numberEdges;
     int numberVertices;
     vector<Vertex*>* vertices;
@@ -81,6 +82,7 @@ private:
 
 public:
     Graph(int size){
+        this->MAX_SIZE = size;
         this->numberVertices = 0;
         this->numberEdges = 0;
         this->vertices = new vector<Vertex*>(size);
@@ -106,8 +108,10 @@ public:
     
 // Add vertices and Edges
     void AddVertex(Vertex* vertex){
-        (*vertices)[vertex->GetID()] = vertex; // place into vector according to ID number
-        numberVertices++;
+        if (numberVertices != MAX_SIZE){
+            (*vertices)[vertex->GetID()] = vertex; // place into vector according to ID number
+            numberVertices++;
+        }
         return;
     }
     

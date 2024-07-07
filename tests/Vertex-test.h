@@ -131,7 +131,7 @@ TEST(VertexTest2, FullInstantiation){
     Vertex* newVert = new Vertex(0, "nameOne", "friendOne", 10, 0, city);
     EXPECT_EQ(newVert->GetID(), 0);
     EXPECT_EQ(newVert->GetName(), "NameOne");
-    EXPECT_EQ(newVert->GetFriend(), "FriendOne");
+    EXPECT_EQ(newVert->GetFriend(), "friendOne");
     EXPECT_EQ(newVert->GetCoordinates()->x, 10);
     EXPECT_EQ(newVert->GetCoordinates()->y, 0);
     EXPECT_EQ(newVert->GetSettlement(), city);  

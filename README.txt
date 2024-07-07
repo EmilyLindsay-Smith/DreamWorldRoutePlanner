@@ -16,7 +16,3 @@ cmake --build build/
 ./build/src/Debug/DreamWorldRoutePlanner_run.exe
 # Run the tests:
 ./build/tests/DreamWorldRoutePlanner_test
-
-# To quickly compile and run the tests (after eg change code:)
-make RoutePlannerProject_test; tests/RoutePlannerProject_test
-
