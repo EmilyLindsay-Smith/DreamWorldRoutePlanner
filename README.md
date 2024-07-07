@@ -1,7 +1,8 @@
-#Project Description
+#DreamWorld Route Planner
+## Project Description
 This is a C++ project created for Nicholas Day's C++ Part 2: Data Structures and Algorithm course at the Department of Continuing Education, Oxford. . 
 
-#Project Scenario
+## Project Scenario
 The route planner creates 100 settlements in a 100x100 unit sized world. 20% of the settlements are large settlements, e.g. citadels; 30% are medium size settlements, e.g. towns; and 50% are small sized settlements, e.g. hamlets.
 
 The route planner generates a road network between the settlements, such that:
@@ -21,7 +22,7 @@ The user can interact with the route planner in the following ways:
 
 For details about some of the design decisions, please see DecisionReport.txt
 
-# Project Compilation Instructions:
+## Project Compilation Instructions:
 To compile the project, clone this repository and from inside run the following commands:
 
 cmake -B build/
@@ -31,9 +32,9 @@ cmake --build build/
 Note to compile the tests, you will need to add a /lib/ directory containing googletest. 
 The second line of the instructions is needed to force googletest to compile with the same CRT as the application
 
-## Run the Project:
+### Run the Project:
 ./build/src/Debug/DreamWorldRoutePlanner_run.exe
-## Run the tests:
+### Run the tests:
 ./build/tests/DreamWorldRoutePlanner_test
 
 # Future Improvements:
