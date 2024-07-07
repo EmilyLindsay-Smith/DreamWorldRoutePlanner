@@ -16,10 +16,12 @@ using namespace RoutePlannerUtils;
 struct Location{
     int x;
     int y;
+    Location(){};
     Location(int x, int y){
         this->x = x;
         this->y = y;
     }
+
 };
 
 class Vertex{
@@ -27,9 +29,9 @@ private:
     int ID = -1;
     string name = "";
     string friendName = "";
-    Location* coordinates = nullptr; 
+    Location* coordinates = new Location(); 
     SettlementType settlement;
-    vector<string>* amenities = nullptr;
+    vector<string>* amenities = new vector<string>;
 public:
     Vertex(){};
 
@@ -45,12 +47,16 @@ public:
         return this->ID;
     }
     void SetID(int ID){
-        this->ID = ID;
+        if (ID >=0){
+            this->ID = ID;
+        }
         return;
     }
     void SetName(string name){
-        this->name = name;
-        name[0] = toupper(name[0]);
+        if (!ContainsNonAlpha(name)){
+            name = MakeSentenceCase(name);
+            this->name = name;
+        }
         return;
     }
     string GetName(){
@@ -61,27 +67,40 @@ public:
     }
     void SetSettlement(SettlementType settlement){
         this->settlement = settlement;
+        return;
     }
 
     string GetFriend(){
         return this->friendName;
     }
     void SetFriend(string friendName){
-        this->friendName = friendName;
+        if (!ContainsNonAlpha(friendName)){
+            this->friendName = friendName;
+        }
     }
+
     Location* GetCoordinates(){
         return this->coordinates;
     }
     void SetX(int x){
-        this->coordinates->x = x;
+        if (x >=0){
+            this->coordinates->x = x;
+        }
+        return;
     }
 
     void SetY(int y){
-        this->coordinates->y = y;
+        if (y >=0){         
+            this->coordinates->y = y;
+        }
+        return;
     }
 
     void SetCoordinates(int x, int y ){
-        this->coordinates = new Location(x,y);
+        if (x >=0 && y >= 0){
+            this->coordinates = new Location(x,y);
+        }
+        return;
     }
 
     vector<string>* GetAmenities(){
@@ -89,7 +108,10 @@ public:
     }
 
     void AddAmenities(string amenity){
-        amenities->push_back(amenity);
+        if (!ContainsNonAlpha(amenity)){
+            amenities->push_back(amenity);
+        }
+        return;
     }
 //Overloaded Operators for Comparison
     bool operator!=(const Vertex& rhd) const {
