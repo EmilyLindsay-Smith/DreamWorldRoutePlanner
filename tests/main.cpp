@@ -3,6 +3,8 @@
 #include "RoutePlannerUtils-test.h"
 #include "Graph-test.h"
 #include "Dijkstra-test.h"
+#include "PrefixTree-test.h"
+#include "Prim-test.h"
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);
