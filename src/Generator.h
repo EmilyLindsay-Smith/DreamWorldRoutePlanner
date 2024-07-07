@@ -136,12 +136,12 @@ private:
                 throw runtime_error("Settlement Type not recognised");
         }
         //cout << "Appended to location vector" << endl;
-        // ADD UTILITIES TOO
-       
         switch(settlement){
             case placeBig: 
                 for (int i=0; i<3; i++){
-                    newPlace->AddAmenities((*standardAmenities)[GetRandomNumber(static_cast<int>(standardAmenities->size()))]);
+                    string newAmenity = (*standardAmenities)[GetRandomNumber(static_cast<int>(standardAmenities->size()))];
+                    cout << newAmenity << endl; 
+                    newPlace->AddAmenities(newAmenity);
                 };
                 break;
             case placeMedium:
@@ -243,6 +243,7 @@ public:
         this->searchTree = searchTree;
         this->standardAmenities = standardAmenities;
         this->specialAmenities = specialAmenities;
+        cout << "SpA Size: " << this->specialAmenities->size() << endl;
         this->VERBOSE = verbose; 
         this->namer = new NameGenerator();
         this->timer = new Timer("Generator");

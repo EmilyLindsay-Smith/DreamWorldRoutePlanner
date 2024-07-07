@@ -143,11 +143,8 @@ public:
     };
 
     Vertex* FindNearestAmenity(Vertex* origin, string amenity, string TimeVsDist){
-        cout << "e150" << endl;
         int locationID = pathFinder->GetNearestAmenity(origin, TimeVsDist, amenity);
-        cout << "e152" << endl;
         Vertex* location = graph->GetVertexPointer(locationID);
-        cout << "e154" << endl;
         return location;
     };
 

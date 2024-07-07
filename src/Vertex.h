@@ -85,6 +85,7 @@ public:
         if (!ContainsNonAlpha(friendName)){
             this->friendName = friendName;
         }
+        return;
     }
 
     Location* GetCoordinates(){

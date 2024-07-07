@@ -17,10 +17,17 @@ private:
     void GenerateAmenities(){
         vector<std::string> stA = {"apothecary", "blacksmith", "glassworks", "tanner", "weaver", "carpenter", "tavern", "cobbler", "fishmonger"};
         vector<std::string> spA = {"market", "university", "barracks", "healer", "bookshop", "oracle"};
-        standardAmenities = &stA;
-        specialAmenities = &spA;
-        amenities = &stA;
-        amenities->insert(amenities->end(), spA.begin(), spA.end());
+        amenities = new vector<string>;
+        standardAmenities = new vector<string>;
+        for (auto elem: stA){
+            standardAmenities->push_back(elem);
+            amenities->push_back(elem);
+        }
+        specialAmenities = new vector<string>;
+        for (auto elem: spA){
+            specialAmenities->push_back(elem);
+            amenities->push_back(elem);
+        }
         return;
     }
 
@@ -191,7 +198,7 @@ private:
             cout << "Unfortunately there is no shortest time route available between "<< origin->GetName() << " and " << destination->GetName() << endl;
         }else{
             cout <<"\nIf you want to travel the fastest route between " << origin->GetName() << " and " << destination->GetName()
-                << " your journey will take " << pathCostByTime<< " minutes" << endl;
+                << " your journey will take " << MinToHour(pathCostByTime) << endl;
             cout << "Please follow this route: " << endl;
             DisplayRoute(pathByTime);
         }
@@ -230,7 +237,7 @@ private:
         stack<Vertex*> pathByDist = engine->FindPath(origin, destByDist, "Dist", pathCostByDist);
 
         cout << "The nearest " << amenity << "  with the shortest distance route is in " << destByDist->GetName() << " (" << pathCostByDist << "km)" << endl;
-        cout << "The nearest " << amenity << "with the shortest time route is in " << destByTime->GetName() << " (" << pathCostByTime<< "minutes)" << endl;
+        cout << "The nearest " << amenity << " with the shortest time route is in " << destByTime->GetName() << " (" << MinToHour(pathCostByTime) << ")" << endl;
 
         cout << "Do you want to see the routes? y/n" << endl;
         char choice;
@@ -249,7 +256,7 @@ private:
                 cout << "Unfortunately there is no shortest time route available between "<< origin->GetName() << " and " << destByTime->GetName() << endl;
             }else{
                 cout <<"\nIf you want to travel the fastest route between " << origin->GetName() << " and " << destByTime->GetName()
-                    << "your journey will take " << pathCostByTime<< " minutes" << endl;
+                    << "your journey will take " << MinToHour(pathCostByTime) << endl;
                 cout << "\nPlease follow this route: " << endl;
                 DisplayRoute(pathByTime);
             }
@@ -281,7 +288,7 @@ private:
 
 public:
     CLI(int size){
-        this->size = size;
+        this->size = size;        
     }
 
     void Introduce(){
