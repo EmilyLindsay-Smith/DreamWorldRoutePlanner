@@ -12,7 +12,6 @@ The route planner generates a road network between the settlements, such that:
 	all large settlements are connected by fast roads
 	all large and medium settlements are connected by medium roads
 	all medium and small settlements are connected by slow roads
-	all settlements are also linked to the 3rd, 6th and 9th nearest settlement
 
 The user can interact with the route planner in the following ways:
 
@@ -49,7 +48,8 @@ RoutePlannerUtils.h	utility functions used through the application
 Timer.h			timer functions used in generator if verbose==true
 -----------------------------------------------------------------------------
 
-Some of the design decisions for each class are discussed below:
+Some of the design decisions are discussed below:
+
 ## PathFinding
 
 This application required finding the shortest path between two vertices (for route finding) as well as the shortest path between all vertices (for finding nearest amenity). 
@@ -61,7 +61,7 @@ Dijkstra + AdjList with priority queue 	Time(O(ElogV), Space O(E+V)
 Dial's Algorithm: Time O(numVert * maxEdgeWeight), Space O(numVert * maxEdgeWeight) 
 	- however, this is better when the edge weights are only a small set of distinct values. This is not the case with this application, as weights are Euclidean distances calculated as floats or time calculated as Euclidean Distances divided by speed limits. 
 
-In this implementation, the costs, parents and visited are represented as arrays. An alternative would be to have a hashmap, where insertion/search is also O(1) however it is faster to access arrays than hash maps. 
+In this implementation, the costs, parents and visited are represented as arrays. An alternative would be to have a hashmap, where insertion/search is also O(1) however it is faster to access arrays than hash maps. In the graph, the vertices are in ID order where ID == index
 
 ## Road Generation
 
@@ -83,9 +83,8 @@ A prefix tree is a good solution here. Insertion/Search in prefix trees is O(num
 
 Generalised suffix trees do have faster insertion (O(n) for Uskonnen)) and search (O(patternLenth)); however they require more space. Furthermore, in this application is it more useful to return all the strings that start with the same letter, rather than all the strings that contain the same letter.
 
-## Graph 
-
 # Testing
+Tests have been written to cover the public methods of these classes. A screenshot showing all tests pass as of TIME can be found HERE.
 
 # Future Improvements
 
