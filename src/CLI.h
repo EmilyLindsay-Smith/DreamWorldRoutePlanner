@@ -52,7 +52,6 @@ private:
             cout << "Input not accepted. Please try again" << endl;
             output = GetInt(lowerBound, upperBound);
         }
-        cout << "returning: " << output << endl;
         return output;
     }
 
@@ -61,7 +60,7 @@ private:
         while (!(cin >> input)){
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << "Please try again: " << endl;
+            cout << "Input not accepted. Please try again: " << endl;
         }     
         string output;
         for (auto chr : input){
