@@ -53,4 +53,3 @@ The second line of the instructions is needed to force googletest to compile wit
 - The PrefixTree children representation could be changed to a map to avoid iterating over empty values in the current vector
 - Facilitate searching for the nearest multiple instances of an amenity
 - Add GoogleMock based tests for eg. ContainerEq()
-- Type checking for cin in CLI 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <optional>
 using namespace std;
 
 #include "Engine.h"
@@ -14,6 +15,7 @@ private:
     vector<std::string>* specialAmenities; 
     vector<std::string>* amenities;
 ;
+// Set UP function to generate amenities vectors for use in generator and in finding amenity
     void GenerateAmenities(){
         vector<std::string> stA = {"apothecary", "blacksmith", "glassworks", "tanner", "weaver", "carpenter", "tavern", "cobbler", "fishmonger"};
         vector<std::string> spA = {"market", "university", "barracks", "healer", "bookshop", "oracle"};
@@ -31,30 +33,66 @@ private:
         return;
     }
 
+// Input Sanitisation Functions
+    int GetInt(int lowerBound, int upperBound){
+        cout << "please type a whole number between " << lowerBound << " and " << upperBound << endl;
+        int input;
+        while (! (cin >> input)){
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "Sorry, I didn't catch that. Please input a whole number between " << lowerBound << " and " << upperBound << endl;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        
+        int output = static_cast<int>(input); //co
+        if (output >= lowerBound && output <= upperBound){
+            return output;    
+        }else{
+            cout << "Input not accepted. Please try again" << endl;
+            output = GetInt(lowerBound, upperBound);
+        }
+        cout << "returning: " << output << endl;
+        return output;
+    }
+
+    string GetString(){
+        string input;
+        while (!(cin >> input)){
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "Please try again: " << endl;
+        }     
+        string output;
+        for (auto chr : input){
+            string s{chr};
+            if (!ContainsNonAlpha(s)){
+                output += chr;
+            }
+        }
+        return output;
+    };
+
+
+// Choose Settlement based on full string or partial match
     int ChoosePartialMatch(vector<RefPair>* searchOutput, std::string query){
         cout << "Settlement " << query << " could not be found. However, " << static_cast<int>(searchOutput->size()) << " partial matches have been identified." << endl;
             
-            for (int i = 1; i <= static_cast<int>(searchOutput->size()); i++){
-                std::string place = (*searchOutput)[i-1].queryString;
-                place[0] = toupper(place[0]); // sentence case
-                Vertex* location = (*searchOutput)[i-1].stringRef;
-                cout << "\t" <<  i << "\t" << place << endl;
-            }
-            
-            cout << "Please type an integer between 1 and " <<static_cast<int>(searchOutput->size()) << " to choose a partial match settlement" << endl;
-            int choice;
-            cin >> choice;
-            if (choice < 1 && choice > searchOutput->size()){  // CHECK CHOICE IS INT??
-                cout << "Sorry, I couldn't recognise that choice" << endl;
-                choice = ChoosePartialMatch(searchOutput, query);
-            }
-            choice = choice -1;
-            return choice; // as vector is 0 indexed
+        for (int i = 1; i <= static_cast<int>(searchOutput->size()); i++){
+            std::string place = (*searchOutput)[i-1].queryString;
+            place[0] = toupper(place[0]); // sentence case
+            Vertex* location = (*searchOutput)[i-1].stringRef;
+            cout << "\t" <<  i << "\t" << place << endl;
+        }
+        
+        cout << "To choose a partial match settlement, "; 
+        int choice = GetInt(1, static_cast<int>(searchOutput->size()));
+        choice = choice -1;
+        return choice; // as vector is 0 indexed
     }
 
     Vertex* FindSettlement(){
-        std::string query;
-        cin >> query; // VALIDATE/SANITISE ME!!!!
+        std::string query = GetString();
         query[0] = toupper(query[0]); // sentence case
         vector<RefPair>* searchOutput = engine->RetrieveSettlement(query);
         if (searchOutput->empty()){
@@ -71,6 +109,7 @@ private:
         return place;
     }
 
+// List information about all the settlements
     void ListAllSettlements(){
         // Get List of all Settlements
         set<std::string>* results = engine->ListAllSettlements();
@@ -114,7 +153,7 @@ private:
         Continue();
         return;
     };
-
+// Display information about a specific settlement
     void DisplaySettlement(){
         // Search for query in prefix tree
         cout << "Which settlement would you like to display information for?" << endl;
@@ -126,6 +165,7 @@ private:
         Continue();
         return;
     }
+// Display a route based on the parent stack
 
     void DisplayRoute(stack<Vertex*> route){
         if (route.empty()){
@@ -150,8 +190,10 @@ private:
             count++;
         }
         cout << "You have arrived at your destination" << endl;
+        return;
     }
 
+// Plan Journey Route Functions
     Vertex* GetOrigin(){
         cout << "Which settlement would you like to start from?" << endl;
         Vertex* origin = FindSettlement();
@@ -206,21 +248,17 @@ private:
         return;
     }
 
+// Find nearest amenity functions
     std::string GetAmenity(){
         cout << "The available amenities are: " << endl;
         for (int i = 0; i < static_cast<int>(amenities->size()); i++){
             cout << "\t" << i+1 << ":\t" << (*amenities)[i] << endl;
         }
-        cout << "Please select an amenity by typing a number between 1 and " << static_cast<int>(amenities->size()) << endl;
-        int choice;
-        cin >> choice;
-        std::string amenity;
-        if (choice >= 1 && choice <= static_cast<int>(amenities->size())){
-            amenity = (*amenities)[choice -1];
-        }else{
-            cout << "Sorry I didn't understand that. Please try again." << endl;
-            amenity = GetAmenity();
-        }
+
+        cout << "To select an amenity, ";
+        int choice = GetInt(1, static_cast<int>(amenities->size()));
+        string amenity = (*amenities)[choice -1];
+        
         return amenity;
     }
 
@@ -240,10 +278,9 @@ private:
         cout << "The nearest " << amenity << " with the shortest time route is in " << destByTime->GetName() << " (" << MinToHour(pathCostByTime) << ")" << endl;
 
         cout << "Do you want to see the routes? y/n" << endl;
-        char choice;
-        cin >> choice;
+        string decision = GetString();
 
-        if (choice == 'y'){
+        if (tolower(decision[0]) == 'y'){
             if (pathByTime.top() == nullptr){
                 cout << "Unfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destByDist->GetName() << endl;
             }else{
@@ -265,22 +302,11 @@ private:
         return;
     }
 
-    int GetCount(){
-        cout << "How many results for this amenity do you want? Please type a whole number: " << endl;
-        int count;
-        cin >> count;
-        if (count > 0){
-            return count;
-        }else{
-            return GetCount();
-        }
-    }
-   
+// Regenerate DreamWorld   
     void Regenerate(){
         cout << "This will destroy the current DreamWorld and create a new one. Are you sure(y/n)?" << endl;
-        char decision;
-        cin >> decision;
-        if (decision == 'y'){
+        string decision = GetString();
+        if (tolower(decision[0]) == 'y'){
             SetUpLandscape(); 
         }
         SelectActivity();
@@ -318,9 +344,8 @@ public:
         cout << "4: \t Search for routes between settlements in DreamWorld" << endl;
         cout << "5: \t Search for the nearest amenity to a settlement in DreamWorld" << endl;
         cout << "6: \t Regenerate DreamWorld to create new settlements and roads" << endl;
-        cout << "Please type a number between 1 and 7 to select an activity or 'Ctrl-C' to exit the program" << endl;
-        int choice;
-        cin >> choice;
+        cout << "To select an activity, ";
+        int choice = GetInt(1, 7);
 
         switch(choice){
             case 1 : ListAllSettlements(); break;
@@ -335,9 +360,8 @@ public:
 
     void Continue(){
         cout << "Would you like to select another activity (y/n)?" <<endl;
-        char decision;
-        cin >> decision;
-        if (decision == 'y'){
+        string decision = GetString();
+        if (tolower(decision[0]) == 'y'){
             SelectActivity();
         }else{
             cout << "Sorry to see you go! Visit DreamWorld again any time" << endl;
