@@ -27,6 +27,7 @@ private:
     int ID = -1;
     string name = "";
     string friendName = "";
+    string friendSurname = "";
     Location* coordinates = new Location(); 
     SettlementType settlement;
     vector<string>* amenities = new vector<string>;
@@ -88,6 +89,16 @@ public:
         return;
     }
 
+    string GetFriendSurname(){
+        return this->friendSurname;
+    }
+    void SetFriendSurname(string friendName){
+        if (!ContainsNonAlpha(friendName)){
+            this->friendSurname = friendName;
+        }
+        return;
+    }
+
     Location* GetCoordinates(){
         return this->coordinates;
     }
@@ -142,7 +153,7 @@ public:
     void Display(){
         cout << this->name << " is a " << enum2Str(settlement) 
             << " located at the coordinates ( " << coordinates->x << "," << coordinates->y <<")."
-            << "Your friend " << this->friendName << " lives here."<< endl;
+            << "Your friend " << this->friendName << (this->friendSurname != "" ? " " : "" )<< this->friendSurname << " lives here."<< endl;
         if (!amenities->empty()){
             cout << this->name << "'s amenities include: " << endl;
             vector<string>::iterator it = amenities->begin();

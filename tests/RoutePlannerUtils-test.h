@@ -66,9 +66,9 @@ TEST(RoutePlannerUtilsTest, ContainsNonAlpha){
     EXPECT_EQ(ContainsNonAlpha(s1), false);
     EXPECT_EQ(ContainsNonAlpha(s2), true);
     EXPECT_EQ(ContainsNonAlpha(s3), true);
-    EXPECT_EQ(ContainsNonAlpha(s4), true);
-    
+    EXPECT_EQ(ContainsNonAlpha(s4), true);  
 }
+
 
 TEST(RoutePlannerUtilsTest, MakeLowerCase){
     string s1 = "Emily";

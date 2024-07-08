@@ -5,6 +5,7 @@
 #include "Dijkstra-test.h"
 #include "PrefixTree-test.h"
 #include "Prim-test.h"
+#include "Generator-test.h"
 
 int main(int argc, char **argv){
 	::testing::InitGoogleTest(&argc, argv);

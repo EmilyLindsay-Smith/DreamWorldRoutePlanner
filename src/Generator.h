@@ -64,7 +64,6 @@ private:
         //cout << "Calling GetName" << endl;
         string sett = enum2Str(settlement);
         string name = namer->GetName(sett);
-        if (ID->GetID() == 1) cout << name << endl;
         //cout << "Found name: " << name << endl;
         bool uniqueName = searchTree->Insert(name, ID);
         //cout << "Unique: " << uniqueName << endl;
@@ -105,8 +104,9 @@ private:
         //cout << "Set Name: " << name <<  endl;
         // Choose Friend Name
         string friendName = namer->GetName("firstname");
-        friendName += " " + namer->GetName("surname");
+        string friendSurname = namer->GetName("surname");
         newPlace->SetFriend(friendName);
+        newPlace->SetFriendSurname(friendSurname);
         //cout << "Set FriendName: " << friendName <<  endl;
         //Vertex* newPlace = new Vertex(ID, name, friendName, x, y, settlement);
          //Add Settlement to graph
@@ -140,7 +140,6 @@ private:
             case placeBig: 
                 for (int i=0; i<3; i++){
                     string newAmenity = (*standardAmenities)[GetRandomNumber(static_cast<int>(standardAmenities->size()))];
-                    cout << newAmenity << endl; 
                     newPlace->AddAmenities(newAmenity);
                 };
                 break;
@@ -243,7 +242,6 @@ public:
         this->searchTree = searchTree;
         this->standardAmenities = standardAmenities;
         this->specialAmenities = specialAmenities;
-        cout << "SpA Size: " << this->specialAmenities->size() << endl;
         this->VERBOSE = verbose; 
         this->namer = new NameGenerator();
         this->timer = new Timer("Generator");
@@ -261,7 +259,7 @@ public:
         return graph;
     }
 
-    int GetNumCities(){
+    int GetNumPlaceBigs(){
         return static_cast<int>(placeBigs->size());
     }
     int GetNumPlaceMediums(){
@@ -269,6 +267,16 @@ public:
     }
     int GetNumPlaceSmalls(){
         return static_cast<int>(placeSmalls->size());
+    }
+    int GetMaxX(){
+        return MAX_X;
+    }
+    int GetMaxY(){
+        return MAX_Y;
+    }
+
+    int GetNumAmenities(){
+        return static_cast<int>(specialAmenities->size()) + static_cast<int>(standardAmenities->size());
     }
 };
 #endif

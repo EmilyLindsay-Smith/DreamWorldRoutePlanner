@@ -89,4 +89,4 @@ A prefix tree is a good solution here. Insertion/Search in prefix trees is O(num
 Generalised suffix trees do have faster insertion (O(n) for Uskonnen)) and search (O(patternLenth)); however they require more space. Furthermore, in this application is it more useful to return all the strings that start with the same letter, rather than all the strings that contain the same letter.
 
 ## Testing
-Unit Tests have been written to cover the public methods of Dijkstra, Graph, PrefixTree, Prim, RoutePlannerUtils, and Vertex. A record of the latest test output is at /testoutput.txt
+Unit Tests have been written to cover the public methods of Dijkstra, Generator, Graph, PrefixTree, Prim, RoutePlannerUtils, and Vertex. A record of the latest test output is at /testoutput.txt

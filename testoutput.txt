@@ -1,5 +1,5 @@
-Mon, Jul  8, 2024  6:53:25 PM
-[==========] Running 37 tests from 7 test suites.
+Mon, Jul  8, 2024  8:05:29 PM
+[==========] Running 40 tests from 8 test suites.
 [----------] Global test environment set-up.
 [----------] 6 tests from VertexTest
 [ RUN      ] VertexTest.TestName
@@ -96,6 +96,15 @@ Mon, Jul  8, 2024  6:53:25 PM
 [       OK ] PrimTest.Test3 (0 ms)
 [----------] 3 tests from PrimTest (2 ms total)
 
+[----------] 3 tests from GeneratorTest
+[ RUN      ] GeneratorTest.TestNumSettlements
+[       OK ] GeneratorTest.TestNumSettlements (2 ms)
+[ RUN      ] GeneratorTest.TestNumRoads
+[       OK ] GeneratorTest.TestNumRoads (2 ms)
+[ RUN      ] GeneratorTest.TestPlaceAttributes
+[       OK ] GeneratorTest.TestPlaceAttributes (2 ms)
+[----------] 3 tests from GeneratorTest (7 ms total)
+
 [----------] Global test environment tear-down
-[==========] 37 tests from 7 test suites ran. (14 ms total)
-[  PASSED  ] 37 tests.
+[==========] 40 tests from 8 test suites ran. (21 ms total)
+[  PASSED  ] 40 tests.
