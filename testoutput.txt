@@ -1,4 +1,5 @@
-[==========] Running 35 tests from 7 test suites.
+Mon, Jul  8, 2024  6:53:25 PM
+[==========] Running 37 tests from 7 test suites.
 [----------] Global test environment set-up.
 [----------] 6 tests from VertexTest
 [ RUN      ] VertexTest.TestName
@@ -13,7 +14,7 @@
 [       OK ] VertexTest.TestCoordinates (0 ms)
 [ RUN      ] VertexTest.TestAmenities
 [       OK ] VertexTest.TestAmenities (0 ms)
-[----------] 6 tests from VertexTest (1 ms total)
+[----------] 6 tests from VertexTest (0 ms total)
 
 [----------] 1 test from VertexTest2
 [ RUN      ] VertexTest2.FullInstantiation
@@ -22,7 +23,7 @@
 
 [----------] 8 tests from RoutePlannerUtilsTest
 [ RUN      ] RoutePlannerUtilsTest.GetRandomNumber
-[       OK ] RoutePlannerUtilsTest.GetRandomNumber (2 ms)
+[       OK ] RoutePlannerUtilsTest.GetRandomNumber (1 ms)
 [ RUN      ] RoutePlannerUtilsTest.MinToHour
 [       OK ] RoutePlannerUtilsTest.MinToHour (0 ms)
 [ RUN      ] RoutePlannerUtilsTest.CharToIndex
@@ -37,32 +38,32 @@
 [       OK ] RoutePlannerUtilsTest.MakeLowerCase (0 ms)
 [ RUN      ] RoutePlannerUtilsTest.MakeSentenceCase
 [       OK ] RoutePlannerUtilsTest.MakeSentenceCase (0 ms)
-[----------] 8 tests from RoutePlannerUtilsTest (3 ms total)
+[----------] 8 tests from RoutePlannerUtilsTest (2 ms total)
 
 [----------] 11 tests from GraphTest
 [ RUN      ] GraphTest.TestDefaultValues
-[       OK ] GraphTest.TestDefaultValues (1 ms)
+[       OK ] GraphTest.TestDefaultValues (0 ms)
 [ RUN      ] GraphTest.TestAddVertex
-[       OK ] GraphTest.TestAddVertex (1 ms)
+[       OK ] GraphTest.TestAddVertex (0 ms)
 [ RUN      ] GraphTest.TestAddVertex2
-[       OK ] GraphTest.TestAddVertex2 (1 ms)
+[       OK ] GraphTest.TestAddVertex2 (0 ms)
 [ RUN      ] GraphTest.GetVertexPointer
-[       OK ] GraphTest.GetVertexPointer (1 ms)
+[       OK ] GraphTest.GetVertexPointer (0 ms)
 [ RUN      ] GraphTest.AddEdge
-[       OK ] GraphTest.AddEdge (1 ms)
+[       OK ] GraphTest.AddEdge (0 ms)
 [ RUN      ] GraphTest.AddEdges
-[       OK ] GraphTest.AddEdges (1 ms)
+[       OK ] GraphTest.AddEdges (0 ms)
 [ RUN      ] GraphTest.GetCost
-[       OK ] GraphTest.GetCost (1 ms)
+[       OK ] GraphTest.GetCost (0 ms)
 [ RUN      ] GraphTest.GetAdjacentVert1
-[       OK ] GraphTest.GetAdjacentVert1 (1 ms)
+[       OK ] GraphTest.GetAdjacentVert1 (0 ms)
 [ RUN      ] GraphTest.GetAdjacentVert2
-[       OK ] GraphTest.GetAdjacentVert2 (1 ms)
+[       OK ] GraphTest.GetAdjacentVert2 (0 ms)
 [ RUN      ] GraphTest.GetAdjacentVert3
-[       OK ] GraphTest.GetAdjacentVert3 (1 ms)
+[       OK ] GraphTest.GetAdjacentVert3 (0 ms)
 [ RUN      ] GraphTest.GetAdjacentVert4
-[       OK ] GraphTest.GetAdjacentVert4 (1 ms)
-[----------] 11 tests from GraphTest (16 ms total)
+[       OK ] GraphTest.GetAdjacentVert4 (0 ms)
+[----------] 11 tests from GraphTest (6 ms total)
 
 [----------] 4 tests from DijkstraTest
 [ RUN      ] DijkstraTest.TestGetPaths_TimeCost
@@ -73,7 +74,7 @@
 [       OK ] DijkstraTest.TestReconstructPaths_TimeCost (0 ms)
 [ RUN      ] DijkstraTest.TestReconstructPaths_DistCost
 [       OK ] DijkstraTest.TestReconstructPaths_DistCost (0 ms)
-[----------] 4 tests from DijkstraTest (2 ms total)
+[----------] 4 tests from DijkstraTest (1 ms total)
 
 [----------] 4 tests from PrefixTreeTest
 [ RUN      ] PrefixTreeTest.TestInsert
@@ -84,13 +85,17 @@
 [       OK ] PrefixTreeTest.TestFindAll (0 ms)
 [ RUN      ] PrefixTreeTest.TestFindAllV
 [       OK ] PrefixTreeTest.TestFindAllV (0 ms)
-[----------] 4 tests from PrefixTreeTest (1 ms total)
+[----------] 4 tests from PrefixTreeTest (0 ms total)
 
-[----------] 1 test from PrimTest
+[----------] 3 tests from PrimTest
 [ RUN      ] PrimTest.Test1
 [       OK ] PrimTest.Test1 (0 ms)
-[----------] 1 test from PrimTest (0 ms total)
+[ RUN      ] PrimTest.Test2
+[       OK ] PrimTest.Test2 (0 ms)
+[ RUN      ] PrimTest.Test3
+[       OK ] PrimTest.Test3 (0 ms)
+[----------] 3 tests from PrimTest (2 ms total)
 
 [----------] Global test environment tear-down
-[==========] 35 tests from 7 test suites ran. (28 ms total)
-[  PASSED  ] 35 tests.
+[==========] 37 tests from 7 test suites ran. (14 ms total)
+[  PASSED  ] 37 tests.
