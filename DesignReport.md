@@ -1,7 +1,9 @@
 # DreamWorld Route Planner Design Report
 
 Author: Dr. Emily Lindsay-Smith
+
 Date: July 2024
+
 Purpose: 1000 word report on design decisions for this project
 
 ## The Scenario
