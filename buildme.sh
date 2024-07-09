@@ -1,5 +1,17 @@
 #!/bin/bash
 
+echo "Checking gtest present"
+
+if [ -d "lib/googletest" ]
+then
+	echo "Googletest installed in lib directory"
+else
+	mkdir lib
+	cd lib
+	git clone https://github.com/google/googletest
+	cd ..
+fi
+
 echo "Starting the build process"
 
 rm -rf build/
@@ -17,12 +29,23 @@ echo ""
 echo " Compiling all the code and tests...."
 cmake --build build/
 
-echo ""
-echo "Build complete"
-echo ""
-echo "To run the application:"
-echo " ./build/src/Debug/DreamWorldRoutePlanner_run.exe"
-echo ""
-echo "To run the tests:"
-echo " ./build/tests/Debug/DreamWorldRoutePlanner_test.exe"
+RunExe="./build/src/Debug/DreamWorldRoutePlanner_run.exe"
+TestExe="./build/tests/Debug/DreamWorldRoutePlanner_test.exe"
 
+if [ -e $RunExe ]
+then
+	echo "Application build success"
+	echo "To run the application:"
+	echo $RunExe
+else
+	echo "Application build failure"
+fi
+
+if [ -e $TestExe ]
+then
+        echo "Test  build success"
+        echo "To run the tests:"
+        echo $TextExe
+else
+        echo "Test build failure"
+fi
