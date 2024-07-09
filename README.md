@@ -29,9 +29,6 @@ The user can interact with the route planner in the following ways:
 For details about some of the design decisions, please see DecisionReport.txt
 
 ## Project Compilation Instructions:
-To compile the project cmake must be installed.
-
-
 To compile the project, clone this repository, cd into it and run the following commands:
 
 ```
@@ -40,14 +37,8 @@ cmake -Dgtest_force_shared_crt=1 build/
 cmake --build build/
 ```
 
-The second line of the instructions is needed to force googletest to compile with the same CRT as the application
 Note to compile the tests, you will need to add a /lib/ directory containing googletest. 
-```
-mkdir lib
-cd lib
-git clone https://github.com/google/googletest
-
-```
+The second line of the instructions is needed to force googletest to compile with the same CRT as the application
 
 Alternatively, I have included a bash script to run these commands that can be run as follows:
 ```
