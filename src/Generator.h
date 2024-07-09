@@ -132,14 +132,6 @@ private:
                 break;
             default:
                 throw runtime_error("Settlement Type not recognised");
-
-        //Add Settlement to graph
-        if (newPlace->AllSet()){
-            graph->AddVertex(newPlace);
-        }else{
-            CreateSettlement(); // if something has not between set, make a new settlemnt to avoid segmentation faults
-        }
-        //cout << "Added to graph" << endl;
         }
         //cout << "Appended to location vector" << endl;
         switch(settlement){
@@ -162,7 +154,12 @@ private:
             default: throw runtime_error("Settlement Type not recognised");
         }
         newPlace->AddAmenities((*specialAmenities)[GetRandomNumber(static_cast<int>(specialAmenities->size()))]); // add random amenity
-  //      cout << "UTILITIES NEED ADDING HERE" << endl;
+  
+        if (newPlace->AllSet()){
+            graph->AddVertex(newPlace);
+        }else{
+            CreateSettlement(); // if something has not between set, make a new settlemnt to avoid segmentation faults
+        }
     }
     void GenerateSettlements(){
         if (VERBOSE){
@@ -287,6 +284,7 @@ public:
         GenerateRoads();
         return graph;
     }
+
 
     int GetNumPlaceBigs(){
         return static_cast<int>(placeBigs->size());

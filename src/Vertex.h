@@ -143,21 +143,27 @@ public:
     bool AllSet(){
         // Checks ID, Name, SettlementType, Coordinates and Amenities set
         if (GetID() == -1){
+            cout << "ID not set" << endl;
             return false;
         }
         if (GetName() == ""){
+            cout << "name not set" << endl;
             return false;
         }
         if (GetSettlement() <0 || GetSettlement() >3){
+            cout << "stype not set" << endl;
             return false;
         }
         if (GetCoordinates()->x <0 || GetCoordinates()->x > 100){
+            cout << "x not set" << endl;
             return false;
         }
         if (GetCoordinates()->y <0 || GetCoordinates()->y > 100){
+            cout << "y not set" << endl;
             return false;
         }
         if (amenities->size() == 0){
+            cout << "amenities not set" << endl;
             return false;
         }
         return true;

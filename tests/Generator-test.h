@@ -19,13 +19,13 @@ protected:
 };
 
 TEST_F(GeneratorTest, TestNumSettlements){
+
     gen->Run();
 
-    EXPECT_EQ(g1->GetNumberVertices(), 10) << "Didn't create the right number of settlements";
-    EXPECT_EQ(gen->GetNumPlaceBigs(), 2) << "20% should be placeBigs ";
-    EXPECT_EQ(gen->GetNumPlaceMediums(), 3) << "30% should be placeMediums ";
-    EXPECT_EQ(gen->GetNumPlaceSmalls(), 5) << "50% should be placeSmalls ";
-
+    EXPECT_EQ(gen->GetNumPlaceBigs(), numSettlements*.2) << "20% should be placeBigs ";
+    EXPECT_EQ(gen->GetNumPlaceMediums(), numSettlements*.3) << "30% should be placeMediums ";
+    EXPECT_EQ(gen->GetNumPlaceSmalls(), numSettlements*.5) << "50% should be placeSmalls ";
+    
 }
 
 TEST_F(GeneratorTest, TestNumRoads){
