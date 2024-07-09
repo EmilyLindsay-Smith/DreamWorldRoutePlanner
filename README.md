@@ -29,7 +29,7 @@ The user can interact with the route planner in the following ways:
 For details about some of the design decisions, please see DecisionReport.txt
 
 ## Project Compilation Instructions:
-To compile the project, clone this repository and from inside run the following commands:
+To compile the project, clone this repository, cd into it and run the following commands:
 
 ```
 cmake -B build/
@@ -39,6 +39,11 @@ cmake --build build/
 
 Note to compile the tests, you will need to add a /lib/ directory containing googletest. 
 The second line of the instructions is needed to force googletest to compile with the same CRT as the application
+
+Alternatively, I have included a bash script to run these commands that can be run as follows:
+```
+./buildme.sh
+```
 
 ### Run the Project:
 ```
