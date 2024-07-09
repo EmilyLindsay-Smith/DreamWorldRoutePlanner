@@ -93,18 +93,19 @@ private:
             Help(chooseNumber);
             return GetInt(lowerBound, upperBound); 
         }
-        int output = stoi(input);
-        if (!output){
+        try{
+            int output = stoi(input);
+            if (output >= lowerBound && output <= upperBound){
+                return output;    
+            }else{
+                cout << "Input needs to be between " << lowerBound << " and " << upperBound << ". Please try again" << endl;
+                return GetInt(lowerBound, upperBound);
+            }
+        }
+        catch(...){
             cout << "Sorry I couldn't understand that. Please try again" << endl;
             return GetInt(lowerBound, upperBound); 
-        }
-        if (output >= lowerBound && output <= upperBound){
-            return output;    
-        }else{
-            cout << "Input needs to be between " << lowerBound << " and " << upperBound << ". Please try again" << endl;
-            return GetInt(lowerBound, upperBound);
-        }
-        return output;
+        };
     }
 
     string GetString(){
@@ -134,7 +135,7 @@ private:
         return output;
     };
 
-    char GetDecision(){
+    bool GetDecision(){
         cout << "\t(For help, please type ?)" << endl;
         string input;
         while (!(cin >> input)){
@@ -150,11 +151,26 @@ private:
         string output;
         for (auto chr : input){
             string s{chr};
+            if (s == "?"){
+                Help(binaryChoice);
+                return GetDecision();
+            }
             if (!ContainsNonAlpha(s)){
                 output += chr;
             }
         }
-        return tolower(output[0]);
+        if (output.size() == 0){
+            cout << "Sorry I couldn't catch that. Please try again: (y/n)" << endl;
+            return GetDecision();
+        }
+
+
+        if (output == "y" || output == "Y"){
+            cout << "Decision: yes" << endl;
+            return true;
+        }
+        cout << "Decision: no" << endl;
+        return false;
     };
 
 // Choose Settlement based on full string or partial match
@@ -211,6 +227,7 @@ private:
                 cout << "\t" << place << endl;
             }
         }
+        delete results;
         Continue();
         return;
     };
@@ -235,6 +252,7 @@ private:
                     << endl;
             }
         }
+        delete results;
         Continue();
         return;
     };
@@ -247,6 +265,7 @@ private:
             DisplaySettlement();
         }
         engine->DisplaySettlementInfo(place);
+        delete place;
         Continue();
         return;
     }
@@ -365,9 +384,9 @@ private:
         cout << "The nearest " << amenity << " with the shortest time route is in " << destByTime->GetName() << " (" << MinToHour(pathCostByTime) << ")" << endl;
 
         cout << "\nDo you want to see the routes? y/n" << endl;
-        char decision = GetDecision();
+        bool decision = GetDecision();
 
-        if (decision == 'y'){
+        if (decision){
             if (pathByTime.top() == nullptr){
                 cout << "Unfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destByDist->GetName() << endl;
             }else{
@@ -392,8 +411,9 @@ private:
 // Regenerate DreamWorld   
     void Regenerate(){
         cout << "This will destroy the current DreamWorld and create a new one. Are you sure(y/n)?" << endl;
-        char decision = GetDecision();
-        if (decision == 'y'){
+        bool decision = GetDecision();
+
+        if (decision){
             SetUpLandscape(); 
         }
         SelectActivity();
@@ -447,8 +467,9 @@ public:
 
     void Continue(){
         cout << "\nWould you like to select another activity (y/n)?" <<endl;
-        char decision = GetDecision();
-        if (decision == 'y'){
+        bool decision = GetDecision();
+
+        if (decision){
             return SelectActivity();
         }else{
             cout << "\nSorry to see you go! Visit DreamWorld again any time" << endl;
