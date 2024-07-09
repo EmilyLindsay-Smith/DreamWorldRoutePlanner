@@ -1,3 +1,6 @@
+#ifndef CLI_H
+#define CLI_H
+
 #include <iostream>
 #include <optional>
 using namespace std;
@@ -507,3 +510,4 @@ public:
         return;
     }
 };
+#endif 
