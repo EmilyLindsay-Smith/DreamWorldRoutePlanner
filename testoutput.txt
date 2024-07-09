@@ -1,4 +1,4 @@
-Tue, Jul  9, 2024  9:40:03 AM
+Tue, Jul  9, 2024 10:05:58 PM
 [==========] Running 41 tests from 8 test suites.
 [----------] Global test environment set-up.
 [----------] 6 tests from VertexTest
@@ -23,7 +23,7 @@ Tue, Jul  9, 2024  9:40:03 AM
 
 [----------] 8 tests from RoutePlannerUtilsTest
 [ RUN      ] RoutePlannerUtilsTest.GetRandomNumber
-[       OK ] RoutePlannerUtilsTest.GetRandomNumber (1 ms)
+[       OK ] RoutePlannerUtilsTest.GetRandomNumber (2 ms)
 [ RUN      ] RoutePlannerUtilsTest.MinToHour
 [       OK ] RoutePlannerUtilsTest.MinToHour (0 ms)
 [ RUN      ] RoutePlannerUtilsTest.CharToIndex
@@ -105,8 +105,8 @@ Tue, Jul  9, 2024  9:40:03 AM
 [       OK ] GeneratorTest.TestNumRoads (2 ms)
 [ RUN      ] GeneratorTest.TestPlaceAttributes
 [       OK ] GeneratorTest.TestPlaceAttributes (2 ms)
-[----------] 3 tests from GeneratorTest (8 ms total)
+[----------] 3 tests from GeneratorTest (7 ms total)
 
 [----------] Global test environment tear-down
-[==========] 41 tests from 8 test suites ran. (23 ms total)
+[==========] 41 tests from 8 test suites ran. (22 ms total)
 [  PASSED  ] 41 tests.
