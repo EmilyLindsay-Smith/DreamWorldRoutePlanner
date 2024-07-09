@@ -6,6 +6,8 @@ Date: July 2024
 
 Purpose: 1000 word report on design decisions for this project
 
+GitHub Repository: [https://github.com/EmilyLindsay-Smith/DreamWorldRoutePlanner](https://github.com/EmilyLindsay-Smith/DreamWorldRoutePlanner)
+
 ## The Scenario
 
 Welcome to the DreamWorld Route Planner. 
