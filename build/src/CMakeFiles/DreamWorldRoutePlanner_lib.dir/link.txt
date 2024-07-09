@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libDreamWorldRoutePlanner_lib.a CMakeFiles/DreamWorldRoutePlanner_lib.dir/main.cpp.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libDreamWorldRoutePlanner_lib.a
