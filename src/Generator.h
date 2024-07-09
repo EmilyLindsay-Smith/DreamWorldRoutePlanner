@@ -109,9 +109,7 @@ private:
         newPlace->SetFriendSurname(friendSurname);
         //cout << "Set FriendName: " << friendName <<  endl;
         //Vertex* newPlace = new Vertex(ID, name, friendName, x, y, settlement);
-         //Add Settlement to graph
-        graph->AddVertex(newPlace);
-        //cout << "Added to graph" << endl;
+
         // Append to location vectors for use in GenerateRoads();
         switch(settlement){
             case placeBig:
@@ -134,6 +132,14 @@ private:
                 break;
             default:
                 throw runtime_error("Settlement Type not recognised");
+
+        //Add Settlement to graph
+        if (newPlace->AllSet()){
+            graph->AddVertex(newPlace);
+        }else{
+            CreateSettlement(); // if something has not between set, make a new settlemnt to avoid segmentation faults
+        }
+        //cout << "Added to graph" << endl;
         }
         //cout << "Appended to location vector" << endl;
         switch(settlement){

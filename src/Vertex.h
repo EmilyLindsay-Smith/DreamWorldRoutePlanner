@@ -60,7 +60,7 @@ public:
     int GetID() const {
         return this->ID;
     }
-    
+
     void SetID(int ID){
         if (ID >=0){
             this->ID = ID;
@@ -138,6 +138,29 @@ public:
             amenities->push_back(amenity);
         }
         return;
+    }
+
+    bool AllSet(){
+        // Checks ID, Name, SettlementType, Coordinates and Amenities set
+        if (GetID() == -1){
+            return false;
+        }
+        if (GetName() == ""){
+            return false;
+        }
+        if (GetSettlement() <0 || GetSettlement() >3){
+            return false;
+        }
+        if (GetCoordinates()->x <0 || GetCoordinates()->x > 100){
+            return false;
+        }
+        if (GetCoordinates()->y <0 || GetCoordinates()->y > 100){
+            return false;
+        }
+        if (amenities->size() == 0){
+            return false;
+        }
+        return true;
     }
 //Overloaded Operators for Comparison
     bool operator!=(const Vertex& rhd) const {
