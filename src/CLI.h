@@ -56,12 +56,23 @@ private:
     }
 
     string GetString(){
+        cout << "For help, please type ?" << endl;
         string input;
         while (!(cin >> input)){
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cout << "Input not accepted. Please try again: " << endl;
         }     
+        if (input == "?"){
+            //Call Help/Info Function
+            cout << "You need help. Try again" << endl;
+            string input;
+            while (!(cin >> input)){
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "Input not accepted. Please try again: " << endl;
+            }
+        }
         string output;
         for (auto chr : input){
             string s{chr};
@@ -96,6 +107,7 @@ private:
         vector<RefPair>* searchOutput = engine->RetrieveSettlement(query);
         if (searchOutput->empty()){
             cout << "Settlement " << query << " could not be found" << endl;
+            delete searchOutput;
             return nullptr;
         }else if (static_cast<int>(searchOutput->size()) > 1){
             // If multiple partial matches found, user chooses one:
@@ -105,6 +117,7 @@ private:
         // Retrieve pointer to settlement and display info
         Vertex* place = engine->RetrieveSettlementPointer(searchOutput);
         cout << "Selected Location: " << place->GetName() << "\t" << enum2Str(place->GetSettlement()) << " at (" << place->GetCoordinates()->x << "," << place->GetCoordinates()->y << ")" <<endl;
+        delete searchOutput;
         return place;
     }
 
@@ -155,7 +168,7 @@ private:
 // Display information about a specific settlement
     void DisplaySettlement(){
         // Search for query in prefix tree
-        cout << "Which settlement would you like to display information for?" << endl;
+        cout << "\nWhich settlement would you like to display information for?" << endl;
         Vertex* place = FindSettlement();
         if (place == nullptr){
             DisplaySettlement();
@@ -197,7 +210,7 @@ private:
         cout << "Which settlement would you like to start from?" << endl;
         Vertex* origin = FindSettlement();
         if (origin == nullptr){
-            GetOrigin();
+            return GetOrigin();
         }
         return origin;
     }
@@ -206,7 +219,7 @@ private:
         cout << "Which settlement would you like to go to?" << endl;
         Vertex* dest = FindSettlement();
         if (dest == nullptr){
-            GetDest();
+            return GetDest();
         }
         return dest;
     }
@@ -217,6 +230,8 @@ private:
         Vertex* destination = GetDest();
 
         if (origin == destination){
+            cout << "Origin: " << origin->GetName();
+            cout << "Destination: " << destination->GetName();
             cout << "Whoops - you have chosen the same origin and destination! Please try again: " << endl;
             PlanRoute();
         }
@@ -228,19 +243,19 @@ private:
         float pathCostByDist = engine->FindPathCost(origin, destination, "Dist");
         stack<Vertex*> pathByDist = engine->FindPath(origin, destination, "Dist", pathCostByDist);
         if (pathByTime.top() == nullptr){
-            cout << "Unfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destination->GetName() << endl;
+            cout << "\nUnfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destination->GetName() << endl;
         }else{
             cout <<"\nIf you want to travel the shortest distance between " << origin->GetName() << " and " << destination->GetName()
                 << " your journey will be " << pathCostByDist<< " kilometers" << endl;
-            cout << "Please follow this route: " << endl;
+            cout << "\nPlease follow this route: " << endl;
             DisplayRoute(pathByDist);
         }
         if (pathByTime.top() == nullptr){
-            cout << "Unfortunately there is no shortest time route available between "<< origin->GetName() << " and " << destination->GetName() << endl;
+            cout << "\nUnfortunately there is no shortest time route available between "<< origin->GetName() << " and " << destination->GetName() << endl;
         }else{
             cout <<"\nIf you want to travel the fastest route between " << origin->GetName() << " and " << destination->GetName()
                 << " your journey will take " << MinToHour(pathCostByTime) << endl;
-            cout << "Please follow this route: " << endl;
+            cout << "\nPlease follow this route: " << endl;
             DisplayRoute(pathByTime);
         }
         Continue();
@@ -276,7 +291,7 @@ private:
         cout << "The nearest " << amenity << "  with the shortest distance route is in " << destByDist->GetName() << " (" << pathCostByDist << "km)" << endl;
         cout << "The nearest " << amenity << " with the shortest time route is in " << destByTime->GetName() << " (" << MinToHour(pathCostByTime) << ")" << endl;
 
-        cout << "Do you want to see the routes? y/n" << endl;
+        cout << "\nDo you want to see the routes? y/n" << endl;
         string decision = GetString();
 
         if (tolower(decision[0]) == 'y'){
@@ -317,33 +332,33 @@ public:
     }
 
     void Introduce(){
-        cout << "Welcome to the Official Route Planner of DreamWorld" << "\n-----------------------------------" << endl;
+        cout << "\nWelcome to the Official Route Planner of DreamWorld\n" << "\n-----------------------------------\n" << endl;
         cout << "DreamWorld is a bit like the world you already live in, but with quirky amenities, weirder place names and an meanderingly inefficient road network" << endl;
         cout << "DreamWorld has citadels, towns and hamlets, joined together by expressways (fastest), highways and lanes (slowest) " << endl;
-        cout << "Using this Route Planner, you can get information about the settlements in DreamWorld, plan routes between them and find the nearest amenities" << endl;
+        cout << "\nUsing this Route Planner, you can get information about the settlements in DreamWorld, plan routes between them and find the nearest amenities" << endl;
         cout << "Every time you use the Official Route Planner of DreamWorld, the landscape resets, with new settlements and new roads" << endl;
-        cout << "Let's begin!" << endl;
+        cout << "\nLet's begin!" << endl;
     }
     void SetUpLandscape(){
-        cout << "... Creating DreamWorld ..." << endl;
+        cout << "\n\n... Creating DreamWorld ..." << endl;
         GenerateAmenities();
         engine = new Engine(size, standardAmenities, specialAmenities);
         engine->GenerateLandscape();
 
-        cout << "DreamWorld created with " << this->size << " settlements and " << engine->GetNumRoads() << " roads" << endl;   
+        cout << "\n\nDreamWorld created with " << this->size << " settlements and " << engine->GetNumRoads() << " roads" << endl;   
         cout << engine->CheckPrefixTree() << " settlements included in searchTree" << endl;
         return;
     }
 
     void SelectActivity(){
-        cout << "With the DreamWorld Route Planner, you can do the following activities: \n" << endl;
+        cout << "\n\nWith the DreamWorld Route Planner, you can do the following activities: \n" << endl;
         cout << "1: \t List all the settlements in DreamWorld" << endl;
         cout << "2: \t List all the settlements in DreamWorld with their settlement type and coordinates" << endl;
         cout << "3: \t Display more information about a particular settlement in DreamWorld" << endl;
         cout << "4: \t Search for routes between settlements in DreamWorld" << endl;
         cout << "5: \t Search for the nearest amenity to a settlement in DreamWorld" << endl;
         cout << "6: \t Regenerate DreamWorld to create new settlements and roads" << endl;
-        cout << "To select an activity, ";
+        cout << "\nTo select an activity, ";
         int choice = GetInt(1, 7);
 
         switch(choice){
@@ -358,12 +373,12 @@ public:
     }
 
     void Continue(){
-        cout << "Would you like to select another activity (y/n)?" <<endl;
+        cout << "\nWould you like to select another activity (y/n)?" <<endl;
         string decision = GetString();
         if (tolower(decision[0]) == 'y'){
             SelectActivity();
         }else{
-            cout << "Sorry to see you go! Visit DreamWorld again any time" << endl;
+            cout << "\nSorry to see you go! Visit DreamWorld again any time" << endl;
         }
         return;
     }
