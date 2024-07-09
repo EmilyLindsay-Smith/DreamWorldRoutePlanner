@@ -14,7 +14,11 @@ fi
 
 echo "Starting the build process"
 
-rm -rf build/
+if [ -d "./build" ]
+then
+	rm -rf build/
+	echo "Removed old build directory"
+fi
 
 echo ""
 echo " Making the build folder... "
