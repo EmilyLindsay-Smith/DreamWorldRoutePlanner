@@ -30,7 +30,12 @@ public:
         this->generator = new Generator(numSettlements, graph, searchTree, standardAmenities, specialAmenities, true);
         this->pathFinder = new Dijkstra(graph);
     }
-
+    ~Engine(){
+        delete searchTree;
+        delete graph;
+        delete generator;
+        delete pathFinder; 
+    }
 // Set Up Landscape - run generator
     void GenerateLandscape(){
         generator->Run();

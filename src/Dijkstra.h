@@ -19,6 +19,9 @@ struct AmenityCost{
         this->location = location;
         this->cost = cost;
     }
+    ~AmenityCost(){
+        delete location;
+    }
 };
 
 
@@ -40,6 +43,13 @@ public:
         this->vertices = graph->GetVertices();
         this->cost = new vector<float>(numVertices, INF);
     }
+    ~Dijkstra(){
+        delete graph;
+        vertices->clear();
+        delete vertices;
+        delete cost;
+        delete parent;
+       }
 
     int GetNearestAmenity(Vertex* source, string CostType, string amenity){
         cost = GetPaths(source, CostType);

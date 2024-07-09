@@ -53,7 +53,10 @@ public:
             }
         }
     };
-
+    ~PrimGraph(){
+        adjList->clear();
+        delete adjList;
+    }
     unordered_map<Vertex*, unordered_map<Vertex*, float>>* GetAdjList(){
         return this->adjList;
     };     
@@ -127,6 +130,12 @@ public:
         this->numVertices = vertices->size();
         PrimGraph *tmp = new PrimGraph(vertices);
         this->adjList = tmp->GetAdjList();
+    }
+    ~Prim(){
+        vertices->clear();
+        delete vertices;
+        adjList->clear();
+        delete adjList;
     }
 /* Nearest edges can also be added using mergesort to sort the adjacency list
     vector<EdgePair> GetExtraEdges(){

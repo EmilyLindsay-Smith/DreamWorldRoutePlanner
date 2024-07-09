@@ -89,6 +89,12 @@ public:
         this->vertices = new vector<Vertex*>(size);
         this->adjList = new unordered_map<int,unordered_map<int, TravelCosts* >>[size];
         }
+    ~Graph(){
+        vertices->clear();
+        delete vertices;
+        adjList->clear();
+        delete adjList;
+    }
 
 // Basic Getters
     int GetNumberVertices(){

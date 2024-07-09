@@ -285,10 +285,34 @@ private:
         while(!route.empty()){
             Vertex* place2 = route.top();
             route.pop();
-            std::string roadType = engine->IdentifyRoadType(place1, place2);
-            std::string compassDirection = engine->IdentifyRoadDirection(place1, place2);
-            std::string settlement = enum2Str(place2->GetSettlement());
-            std::string coordinates = "(" + to_string(place2->GetCoordinates()->x) + ","+ to_string(place2->GetCoordinates()->y) + ")";
+            string roadType;
+            string compassDirection;
+            string settlement;
+            string coordinates;
+            try{
+                roadType = engine->IdentifyRoadType(place1, place2);
+            }
+            catch(...){
+                roadType = "road";
+            };
+            try{
+                compassDirection = engine->IdentifyRoadDirection(place1, place2);
+            }
+            catch(...){
+               compassDirection = "";
+            };
+            try{
+                settlement = enum2Str(place2->GetSettlement());
+            }
+            catch(...){
+                settlement = "settlement";
+            };
+            try{
+                coordinates = "(" + to_string(place2->GetCoordinates()->x) + ","+ to_string(place2->GetCoordinates()->y) + ")";
+            }
+            catch(...){
+                coordinates = "the end of the road";
+            };
             cout << count << ") Take the " << roadType << " going "<< compassDirection << ((compassDirection.length() > 0) ? " " : "")<< "to " << place2->GetName() << " (" << settlement << " at " << coordinates << ")" << endl;
             place1 = place2; 
             count++;
@@ -391,7 +415,7 @@ private:
                 cout << "Unfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destByDist->GetName() << endl;
             }else{
                 cout <<"\nIf you want to travel the shortest distance between " << origin->GetName() << " and " << destByDist->GetName()
-                    << "your journey will be " << pathCostByDist<< " kilometers" << endl;
+                    << " your journey will be " << pathCostByDist<< " kilometers" << endl;
                 cout << "\nPlease follow this route: " << endl;
                 DisplayRoute(pathByDist);
             }
@@ -399,7 +423,7 @@ private:
                 cout << "Unfortunately there is no shortest time route available between "<< origin->GetName() << " and " << destByTime->GetName() << endl;
             }else{
                 cout <<"\nIf you want to travel the fastest route between " << origin->GetName() << " and " << destByTime->GetName()
-                    << "your journey will take " << MinToHour(pathCostByTime) << endl;
+                    << " your journey will take " << MinToHour(pathCostByTime) << endl;
                 cout << "\nPlease follow this route: " << endl;
                 DisplayRoute(pathByTime);
             }
@@ -424,6 +448,12 @@ public:
         this->size = size;        
     }
 
+    ~CLI(){
+        delete engine;
+        delete standardAmenities;
+        delete specialAmenities;
+        delete amenities;
+    }
     void Introduce(){
         cout << "\nWelcome to the Official Route Planner of DreamWorld\n" << "\n-----------------------------------\n" << endl;
         cout << "DreamWorld is a bit like the world you already live in, but with quirky amenities, weirder place names and an meanderingly inefficient road network" << endl;

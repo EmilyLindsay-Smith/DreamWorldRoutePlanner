@@ -52,7 +52,7 @@ private:
         pair<int, int> coordinates = make_pair(x, y);
         if (find(ExistingCoords.begin(), ExistingCoords.end(),coordinates) != ExistingCoords.end()){
             //If coordinates already in ExistingCoords, try again
-            GetCoordinates();
+            return GetCoordinates();
         }else{
             // Add coordinates to ExistingCoords
             ExistingCoords.push_back(coordinates);
@@ -68,7 +68,7 @@ private:
         bool uniqueName = searchTree->Insert(name, ID);
         //cout << "Unique: " << uniqueName << endl;
         if (!uniqueName){
-            name = GetName(namer, settlement, ID);
+            return GetName(namer, settlement, ID);
         }
         return name; 
     };
@@ -251,6 +251,29 @@ public:
         this->placeMediumsAndPlaceSmalls = new vector<Vertex*>;
         this->placeSmalls = new vector<Vertex*>;
 
+    }
+    ~Generator(){
+        delete graph;
+        delete searchTree;
+        delete namer;
+        delete timer;
+        specialAmenities->clear();
+        delete specialAmenities; 
+        standardAmenities->clear();
+        delete standardAmenities;
+    
+        placeBigs->clear();
+        delete placeBigs;
+        placeBigsAndPlaceMediums->clear();
+        delete placeBigsAndPlaceMediums;
+        
+        placeMediums->clear();
+        delete placeMediums;
+        placeMediumsAndPlaceSmalls->clear();
+        delete placeMediumsAndPlaceSmalls;
+        
+        placeSmalls->clear();
+        delete placeSmalls;
     }
 
     Graph* Run(){

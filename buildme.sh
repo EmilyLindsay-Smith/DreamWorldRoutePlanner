@@ -34,6 +34,7 @@ echo " Compiling all the code and tests...."
 cmake --build build/
 
 RunExe="./build/src/Debug/DreamWorldRoutePlanner_run.exe"
+
 TestExe="./build/tests/Debug/DreamWorldRoutePlanner_test.exe"
 
 if [ -e $RunExe ]

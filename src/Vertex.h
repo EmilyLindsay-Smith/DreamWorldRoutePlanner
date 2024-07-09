@@ -33,6 +33,11 @@ private:
     vector<string>* amenities = new vector<string>;
 public:
     Vertex(){};
+    ~Vertex(){
+        delete coordinates;
+        amenities->clear();
+        delete amenities;
+    }
 
     Vertex(int ID, string name, string friendName, int x, int y, SettlementType settlement){
         if (ID >=0){
@@ -55,6 +60,7 @@ public:
     int GetID() const {
         return this->ID;
     }
+    
     void SetID(int ID){
         if (ID >=0){
             this->ID = ID;
@@ -152,8 +158,8 @@ public:
 
     void Display(){
         cout << this->name << " is a " << enum2Str(settlement) 
-            << " located at the coordinates ( " << coordinates->x << "," << coordinates->y <<")."
-            << "Your friend " << this->friendName << (this->friendSurname != "" ? " " : "" )<< this->friendSurname << " lives here."<< endl;
+            << " located at the coordinates (" << coordinates->x << "," << coordinates->y <<")."
+            << " Your friend " << this->friendName << (this->friendSurname != "" ? " " : "" )<< this->friendSurname << " lives here."<< endl;
         if (!amenities->empty()){
             cout << this->name << "'s amenities include: " << endl;
             vector<string>::iterator it = amenities->begin();

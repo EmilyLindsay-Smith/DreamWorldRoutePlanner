@@ -56,6 +56,7 @@ public:
             this->children[i] = nullptr;
         }
     };
+
     // Utility func primarily for debugging
     void PrintChildren(){
         for (int i = 0; i< ALPHABET_SIZE; i++){
@@ -126,6 +127,9 @@ public:
     PrefixTree(){
         this->numStrings = 0;
         this->root = new Node();
+    }
+    ~PrefixTree(){
+        delete root;
     }
 // Insert New String
     bool Insert(string key, Vertex* stringRef){
