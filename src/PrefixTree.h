@@ -199,6 +199,18 @@ public:
         set<Node*>* visited = new set<Node*>;
         return FindAllStringsVerbose(node, currString, currentResults, visited);
     }
-};
+// Get all the initial chars in the tree
+    vector<char> FindAllStart(){
+        vector<char> allFirst;       
+        for (int i = 0; i < ALPHABET_SIZE; i++){
+            if (root->children[i] != nullptr){
+                // if root child exists
+                char c = IndexToChar(i);
+                allFirst.push_back(c);
+            }
+        }
+        return allFirst;
+    }
 
+};
 #endif

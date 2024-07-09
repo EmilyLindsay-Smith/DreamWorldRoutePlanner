@@ -1,5 +1,5 @@
-Mon, Jul  8, 2024  8:05:29 PM
-[==========] Running 40 tests from 8 test suites.
+Tue, Jul  9, 2024  9:40:03 AM
+[==========] Running 41 tests from 8 test suites.
 [----------] Global test environment set-up.
 [----------] 6 tests from VertexTest
 [ RUN      ] VertexTest.TestName
@@ -76,7 +76,7 @@ Mon, Jul  8, 2024  8:05:29 PM
 [       OK ] DijkstraTest.TestReconstructPaths_DistCost (0 ms)
 [----------] 4 tests from DijkstraTest (1 ms total)
 
-[----------] 4 tests from PrefixTreeTest
+[----------] 5 tests from PrefixTreeTest
 [ RUN      ] PrefixTreeTest.TestInsert
 [       OK ] PrefixTreeTest.TestInsert (0 ms)
 [ RUN      ] PrefixTreeTest.TestSearch
@@ -85,7 +85,9 @@ Mon, Jul  8, 2024  8:05:29 PM
 [       OK ] PrefixTreeTest.TestFindAll (0 ms)
 [ RUN      ] PrefixTreeTest.TestFindAllV
 [       OK ] PrefixTreeTest.TestFindAllV (0 ms)
-[----------] 4 tests from PrefixTreeTest (0 ms total)
+[ RUN      ] PrefixTreeTest.TestFindAllStart
+[       OK ] PrefixTreeTest.TestFindAllStart (0 ms)
+[----------] 5 tests from PrefixTreeTest (1 ms total)
 
 [----------] 3 tests from PrimTest
 [ RUN      ] PrimTest.Test1
@@ -103,8 +105,8 @@ Mon, Jul  8, 2024  8:05:29 PM
 [       OK ] GeneratorTest.TestNumRoads (2 ms)
 [ RUN      ] GeneratorTest.TestPlaceAttributes
 [       OK ] GeneratorTest.TestPlaceAttributes (2 ms)
-[----------] 3 tests from GeneratorTest (7 ms total)
+[----------] 3 tests from GeneratorTest (8 ms total)
 
 [----------] Global test environment tear-down
-[==========] 40 tests from 8 test suites ran. (21 ms total)
-[  PASSED  ] 40 tests.
+[==========] 41 tests from 8 test suites ran. (23 ms total)
+[  PASSED  ] 41 tests.

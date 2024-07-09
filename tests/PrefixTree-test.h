@@ -9,13 +9,15 @@ protected:
     string s3 = "rowan";
     string s4 = "em1ly";
     string s5 = "emma";
-    
+    string s6 = "ch3rles";
+
     Vertex* v1 = new Vertex();
     Vertex* v2 = new Vertex();
     Vertex* v3 = new Vertex();
     Vertex* v4 = new Vertex();
     Vertex* v5 = new Vertex();
-    
+    Vertex* v6 = new Vertex();
+
     PrefixTree*p1 = new PrefixTree();
     
 };
@@ -60,11 +62,11 @@ TEST_F(PrefixTreeTest, TestFindAll){
 
 TEST_F(PrefixTreeTest, TestFindAllV){
     p1->Insert(s1, v1);
-    p1->Insert(s2, v2);
     p1->Insert(s3, v3);
     p1->Insert(s4, v4);
     p1->Insert(s5, v5);
-
+    p1->Insert(s2, v2);
+    
     EXPECT_EQ(p1->FindAllLocations()->size(), 4);
     vector<RefPair>* receivedResults = p1->FindAllLocationsVerbose();
 
@@ -74,3 +76,18 @@ TEST_F(PrefixTreeTest, TestFindAllV){
     EXPECT_EQ((*itR++).queryString, s2);
     EXPECT_EQ((*itR).queryString, s3);
 }
+
+TEST_F(PrefixTreeTest, TestFindAllStart){
+    p1->Insert(s1, v1);
+    p1->Insert(s2, v2);
+    p1->Insert(s3, v3);
+    p1->Insert(s4, v4);
+    p1->Insert(s5, v5); 
+    p1->Insert(s6, v6); 
+    
+    EXPECT_EQ(p1->FindAllStart().size(), 3);
+    EXPECT_EQ(p1->FindAllStart()[0], 'e');
+    EXPECT_EQ(p1->FindAllStart()[1], 'n');
+    EXPECT_EQ(p1->FindAllStart()[2], 'r');
+
+};

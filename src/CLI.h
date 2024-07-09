@@ -33,30 +33,82 @@ private:
         return;
     }
 
+// User Help Functions
+    void DisplayAllStarts(){
+        vector<char> allStarts = engine->GetAllStarts();
+        cout << "\tSettlements start with the following " <<allStarts.size() << " letters in this iteration of DreamWorld: \n"<< endl;
+  
+        for(int i = 1; i <= allStarts.size(); i++){
+            cout << "\t";
+            char c = allStarts[i-1] - 32;
+            string s{c};
+            cout << s;
+            if (i % 7 == 0){
+                cout << "\n";;
+            }
+        }
+        cout << endl;
+    }
+    enum HelpType {binaryChoice, selectSettlement, chooseNumber};
+    void Help(HelpType helper){
+        if (helper == binaryChoice){
+            cout << "\tI think you want help making a (y/n) decision" << endl;
+            cout << "\tIf you want to say 'yes' to the question above, please type 'y' then press enter" << endl;
+            cout << "\tIf you want to say 'no' to the question above, please type any other letter or number then press enter" << endl;
+            cout << "\tLet's give it a go\n" <<endl;;
+            return;
+        }else if (helper == selectSettlement){
+            cout << "\tI think you want help choosing a settlement" << endl;
+            cout << "\tIn the DreamWorld Route Planner, you can search for settlements in two ways: " << endl;
+            cout << "\t\tA:  typing the full settlement name then pressing enter" << endl;
+            cout << "\t\tB:  typing the start of a settlement name then pressing enter" << endl;
+            cout << "\n\tThis means if you don't know the name of a settlement, it will search for all the settlement names that start with what you've searched for"<<endl;
+            cout << "\tIf only one settlement is available, it will choose that one; if multiple are available, it will ask you to choose between them" << endl;
+            cout << "\tIf you type something that isn't available, it'll let you know and ask you to try again\n" << endl;
+            DisplayAllStarts();
+            cout << "\tLet's give it a go\n" <<endl ;
+            return;
+        }else if (helper == chooseNumber){
+            cout << "\tI think you want help choosing from a list of options" << endl;
+            cout << "\tIn front of each option listed above there is a number" << endl;
+            cout << "\tTo choose that option, please type that number then press enter" << endl;
+            cout << "\tLet's give it a go\n" <<endl ;
+            return;
+        }else{
+            cout << "\tSorry, there are no help functions available :)" << endl;
+            return;
+        }
+    }
 // Input Sanitisation Functions
     int GetInt(int lowerBound, int upperBound){
         cout << "please type a whole number between " << lowerBound << " and " << upperBound << endl;
-        int input;
+        cout << "\t(For help, please type ?)" << endl;
+        string input;
         while (! (cin >> input)){
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cout << "Sorry, I didn't catch that. Please input a whole number between " << lowerBound << " and " << upperBound << endl;
         }
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        
-        int output = static_cast<int>(input); //co
+        if (input == "?"){
+            Help(chooseNumber);
+            return GetInt(lowerBound, upperBound); 
+        }
+        int output = stoi(input);
+        if (!output){
+            cout << "Sorry I couldn't understand that. Please try again" << endl;
+            return GetInt(lowerBound, upperBound); 
+        }
         if (output >= lowerBound && output <= upperBound){
             return output;    
         }else{
-            cout << "Input not accepted. Please try again" << endl;
-            output = GetInt(lowerBound, upperBound);
+            cout << "Input needs to be between " << lowerBound << " and " << upperBound << ". Please try again" << endl;
+            return GetInt(lowerBound, upperBound);
         }
         return output;
     }
 
     string GetString(){
-        cout << "For help, please type ?" << endl;
+        cout << "\t(For help, please type ?)" << endl;
         string input;
         while (!(cin >> input)){
             cin.clear();
@@ -64,18 +116,17 @@ private:
             cout << "Input not accepted. Please try again: " << endl;
         }     
         if (input == "?"){
-            //Call Help/Info Function
-            cout << "You need help. Try again" << endl;
-            string input;
-            while (!(cin >> input)){
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << "Input not accepted. Please try again: " << endl;
-            }
+            Help(selectSettlement);
+            return GetString();
         }
+        
         string output;
         for (auto chr : input){
             string s{chr};
+            if (s == "?"){
+                Help(selectSettlement);
+                return GetString();
+            }
             if (!ContainsNonAlpha(s)){
                 output += chr;
             }
@@ -83,6 +134,28 @@ private:
         return output;
     };
 
+    char GetDecision(){
+        cout << "\t(For help, please type ?)" << endl;
+        string input;
+        while (!(cin >> input)){
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "Input not accepted. Please try again: " << endl;
+        }     
+        if (input == "?"){
+            Help(binaryChoice);
+            return GetDecision();
+            }
+        
+        string output;
+        for (auto chr : input){
+            string s{chr};
+            if (!ContainsNonAlpha(s)){
+                output += chr;
+            }
+        }
+        return tolower(output[0]);
+    };
 
 // Choose Settlement based on full string or partial match
     int ChoosePartialMatch(vector<RefPair>* searchOutput, std::string query){
@@ -292,9 +365,9 @@ private:
         cout << "The nearest " << amenity << " with the shortest time route is in " << destByTime->GetName() << " (" << MinToHour(pathCostByTime) << ")" << endl;
 
         cout << "\nDo you want to see the routes? y/n" << endl;
-        string decision = GetString();
+        char decision = GetDecision();
 
-        if (tolower(decision[0]) == 'y'){
+        if (decision == 'y'){
             if (pathByTime.top() == nullptr){
                 cout << "Unfortunately there is no shortest distance route available between "<< origin->GetName() << " and " << destByDist->GetName() << endl;
             }else{
@@ -319,8 +392,8 @@ private:
 // Regenerate DreamWorld   
     void Regenerate(){
         cout << "This will destroy the current DreamWorld and create a new one. Are you sure(y/n)?" << endl;
-        string decision = GetString();
-        if (tolower(decision[0]) == 'y'){
+        char decision = GetDecision();
+        if (decision == 'y'){
             SetUpLandscape(); 
         }
         SelectActivity();
@@ -374,9 +447,9 @@ public:
 
     void Continue(){
         cout << "\nWould you like to select another activity (y/n)?" <<endl;
-        string decision = GetString();
-        if (tolower(decision[0]) == 'y'){
-            SelectActivity();
+        char decision = GetDecision();
+        if (decision == 'y'){
+            return SelectActivity();
         }else{
             cout << "\nSorry to see you go! Visit DreamWorld again any time" << endl;
         }

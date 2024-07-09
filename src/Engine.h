@@ -71,6 +71,10 @@ public:
     }
 
 // Get Settlement & Road Info
+    vector<char> GetAllStarts(){
+        return searchTree->FindAllStart();
+    }
+    
     set<string>* ListAllSettlements(){
         set<string>* placeNames = searchTree->FindAllLocations();
         return placeNames;
